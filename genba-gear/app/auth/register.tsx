@@ -8,6 +8,7 @@ import { useAuthContext } from '@/features/auth/context/AuthContext';
 export default function RegisterScreen() {
   const router = useRouter();
   const { signUpWithEmail, loading, error } = useAuthContext();
+  const [businessName, setBusinessName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -15,6 +16,11 @@ export default function RegisterScreen() {
 
   const handleRegister = async () => {
     setLocalError(null);
+
+    if (!businessName.trim()) {
+      setLocalError('屋号（事業者名）を入力してください');
+      return;
+    }
 
     if (password !== confirmPassword) {
       setLocalError('パスワードが一致しません');
@@ -26,9 +32,10 @@ export default function RegisterScreen() {
       return;
     }
 
-    const result = await signUpWithEmail(email, password);
+    const result = await signUpWithEmail(email, password, businessName);
     if (!result.error) {
-      router.replace('/(tabs)');
+      // オンボーディング画面へ遷移
+      router.replace('/auth/onboarding');
     }
   };
 
@@ -65,6 +72,15 @@ export default function RegisterScreen() {
 
             <View className="gap-4">
               <Input
+                label="屋号（事業者名）"
+                placeholder="例: 山田電気工事"
+                value={businessName}
+                onChangeText={setBusinessName}
+                autoCapitalize="none"
+                required
+              />
+
+              <Input
                 label="メールアドレス"
                 placeholder="example@email.com"
                 value={email}
@@ -95,7 +111,7 @@ export default function RegisterScreen() {
               <Button
                 onPress={handleRegister}
                 loading={loading}
-                disabled={!email || !password || !confirmPassword}
+                disabled={!businessName || !email || !password || !confirmPassword}
                 fullWidth
                 size="lg"
               >

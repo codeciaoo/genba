@@ -18,7 +18,7 @@ export default function CustomersScreen() {
           <Button
             variant="outline"
             fullWidth
-            icon={<FontAwesome name="user-plus" size={16} color="#147878" />}
+            leftIcon={<FontAwesome name="user-plus" size={16} color="#1a1f3d" />}
             onPress={() => {}}
           >
             顧客を追加

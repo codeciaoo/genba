@@ -4,10 +4,10 @@ import { useFonts } from 'expo-font';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { useColorScheme } from 'react-native';
 import 'react-native-reanimated';
 import '../global.css';
 
-import { useColorScheme } from '@/components/useColorScheme';
 import { AuthProvider, useAuthContext } from '@/features/auth/context/AuthContext';
 
 export {
@@ -75,6 +75,7 @@ function RootLayoutNav() {
         <Stack.Screen name="voice" options={{ headerShown: false }} />
         <Stack.Screen name="draft" options={{ headerShown: false }} />
         <Stack.Screen name="report" options={{ headerShown: false }} />
+        <Stack.Screen name="settings" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
     </ThemeProvider>
