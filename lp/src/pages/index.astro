@@ -1,0 +1,477 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="現場の相棒 | しゃべるだけで請求書ができる - 先行モニター募集中">
+  <!-- ===== セクション1: FV（ファーストビュー）- 全面改修 ===== -->
+  <section class="bg-genba-navy-900 py-12 px-4">
+    <div class="max-w-4xl mx-auto">
+      <!-- 開発中バッジ -->
+      <div class="text-center md:text-left mb-6">
+        <span class="inline-block bg-genba-yellow-500 text-genba-black text-xs font-semibold px-3 py-1 rounded">
+          開発中／先行モニター募集
+        </span>
+      </div>
+
+      <div class="md:flex md:items-center md:gap-8">
+        <!-- 左: テキスト -->
+        <div class="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
+          <h1 class="text-3xl md:text-4xl font-bold text-white leading-tight mb-4">
+            しゃべるだけで、<br />請求書ができる。
+          </h1>
+          <p class="text-lg text-genba-teal-100 mb-2">
+            建設・設備の一人親方向け
+          </p>
+          <p class="text-base text-gray-300 mb-6 leading-relaxed">
+            現場終わりに音声で報告 → 日報・請求書を自動作成<br />
+            <span class="text-sm opacity-80">※インボイス形式対応・最終確認はあなた</span>
+          </p>
+
+          <!-- CTA -->
+          <a
+            href="#register"
+            class="inline-block bg-genba-teal-700 hover:bg-genba-teal-500 text-white font-semibold text-lg px-8 py-4 rounded-md shadow-lg transition-colors duration-200 min-h-[56px]"
+          >
+            【無料】先行モニターに登録する
+          </a>
+
+          <!-- マイクロコピー -->
+          <p class="text-sm text-gray-400 mt-3">
+            登録は30秒／リリース時「永久割引」特典
+          </p>
+        </div>
+
+        <!-- 右: アプリ画面モックアップ -->
+        <div class="md:w-1/2 flex justify-center">
+          <img
+            src="/app-mockup.svg"
+            alt="現場の相棒アプリ画面イメージ"
+            class="w-64 md:w-72 drop-shadow-2xl"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== セクション2: 出力サンプル（FV直下に移動） ===== -->
+  <section class="py-12 px-4 bg-genba-white">
+    <div class="max-w-xl mx-auto">
+      <h2 class="text-xl md:text-2xl font-bold text-center text-genba-navy-900 mb-2">
+        音声から、この請求書が作れます
+      </h2>
+      <p class="text-center text-genba-gray-700 mb-6">
+        「田中邸、エアコン設置、配管2m追加」→ 以下の書類を自動作成
+      </p>
+
+      <!-- 帳票サンプル -->
+      <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden border border-genba-gray-200">
+          <img
+            src="/samples/invoice-sample.png"
+            alt="請求書サンプル"
+            class="w-full h-auto"
+          />
+          <p class="text-sm text-center py-2 text-genba-gray-700 font-semibold">請求書</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden border border-genba-gray-200">
+          <img
+            src="/samples/daily-report-sample.png"
+            alt="日報サンプル"
+            class="w-full h-auto"
+          />
+          <p class="text-sm text-center py-2 text-genba-gray-700 font-semibold">日報</p>
+        </div>
+      </div>
+
+      <p class="text-center text-sm text-genba-gray-700">
+        宛名・品目・金額の確認だけでOK<br />
+        <span class="text-xs opacity-80">※インボイス要件対応</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== セクション3: ビフォーアフター（新規追加） ===== -->
+  <section class="py-12 px-4 bg-genba-gray-100">
+    <div class="max-w-xl mx-auto">
+      <h2 class="text-xl md:text-2xl font-bold text-center text-genba-navy-900 mb-2">
+        夜なべ事務が、なくなります
+      </h2>
+      <p class="text-center text-genba-gray-700 mb-8">
+        毎晩2時間の事務作業 → たった5分に
+      </p>
+
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Before -->
+        <div class="bg-white p-4 rounded-lg border-2 border-genba-error shadow-sm">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-xl">😫</span>
+            <p class="font-bold text-genba-error">これまで</p>
+          </div>
+          <ul class="text-sm space-y-2 text-genba-navy-900">
+            <li class="flex items-start gap-2">
+              <span class="text-genba-gray-500 text-xs mt-0.5">17:00</span>
+              <span>現場終了</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-genba-gray-500 text-xs mt-0.5">21:00</span>
+              <span>やっとPC起動</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-genba-gray-500 text-xs mt-0.5">23:00</span>
+              <span>日報・請求書完了</span>
+            </li>
+          </ul>
+          <p class="text-xs text-genba-gray-700 mt-3 pt-3 border-t border-genba-gray-200">
+            毎晩2時間、事務に消える...
+          </p>
+        </div>
+
+        <!-- After -->
+        <div class="bg-white p-4 rounded-lg border-2 border-genba-success shadow-sm">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-xl">😊</span>
+            <p class="font-bold text-genba-success">導入後</p>
+          </div>
+          <ul class="text-sm space-y-2 text-genba-navy-900">
+            <li class="flex items-start gap-2">
+              <span class="text-genba-gray-500 text-xs mt-0.5">17:00</span>
+              <span>現場終了</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-genba-gray-500 text-xs mt-0.5">17:05</span>
+              <span>車内で音声入力</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-genba-gray-500 text-xs mt-0.5">17:30</span>
+              <span>家族と夕食</span>
+            </li>
+          </ul>
+          <p class="text-xs text-genba-gray-700 mt-3 pt-3 border-t border-genba-gray-200">
+            事務作業は5分で完了
+          </p>
+        </div>
+      </div>
+
+      <!-- 数字での訴求 -->
+      <div class="mt-8 text-center">
+        <p class="text-3xl font-bold text-genba-teal-700 mb-2">入力時間 90%削減</p>
+        <p class="text-sm text-genba-gray-700">1日の事務作業 2時間 → 5分 <span class="text-xs opacity-70">（目標値）</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== セクション4: 共感（Problem） ===== -->
+  <section class="py-16 px-4 bg-genba-white">
+    <div class="max-w-xl mx-auto">
+      <h2 class="text-2xl md:text-[28px] font-bold text-genba-navy-900 text-center leading-tight mb-8">
+        一流の職人が、<br />夜中にPCと格闘する<br />必要なんてない。
+      </h2>
+
+      <!-- チェックリスト -->
+      <div class="space-y-4 mb-8">
+        <div class="flex items-start gap-3 bg-genba-gray-100 p-4 rounded-lg">
+          <span class="text-genba-warning text-xl">✓</span>
+          <p class="text-base">事務が終わらず、結局、夜なべになる</p>
+        </div>
+        <div class="flex items-start gap-3 bg-genba-gray-100 p-4 rounded-lg">
+          <span class="text-genba-warning text-xl">✓</span>
+          <p class="text-base">請求書を出し忘れて、入金が遅れる</p>
+        </div>
+        <div class="flex items-start gap-3 bg-genba-gray-100 p-4 rounded-lg">
+          <span class="text-genba-warning text-xl">✓</span>
+          <p class="text-base">インボイスや細かい入力が、正直しんどい</p>
+        </div>
+      </div>
+
+      <!-- 締め -->
+      <p class="text-center text-genba-navy-700 font-semibold mb-6">
+        あなたのせいじゃありません。<br />
+        <span class="text-genba-gray-700 font-normal">「現場を知らないソフト」が、面倒すぎるだけです。</span>
+      </p>
+
+      <!-- CTA -->
+      <div class="text-center">
+        <a
+          href="#register"
+          class="inline-block bg-genba-teal-700 hover:bg-genba-teal-500 text-white font-semibold px-6 py-3 rounded-md shadow transition-colors duration-200"
+        >
+          【無料】先行モニターに登録する
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== セクション5: 使い方（3ステップ）- アイコン追加 ===== -->
+  <section class="py-16 px-4 bg-genba-gray-100">
+    <div class="max-w-xl mx-auto">
+      <h2 class="text-2xl font-bold text-genba-navy-900 text-center mb-10">
+        使い方は、たった3つ。
+      </h2>
+
+      <div class="space-y-6">
+        <!-- ステップ1 -->
+        <div class="flex items-start gap-4 bg-white p-4 rounded-lg shadow-sm">
+          <div class="flex-shrink-0 w-14 h-14 bg-genba-teal-700 text-white rounded-full flex items-center justify-center">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <div class="pt-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-sm font-bold text-genba-teal-700">STEP 1</span>
+            </div>
+            <p class="font-semibold text-lg text-genba-navy-900">アプリを開いて登録する（無料）</p>
+            <p class="text-sm text-genba-gray-700">メールアドレスだけでOK</p>
+          </div>
+        </div>
+
+        <!-- ステップ2 -->
+        <div class="flex items-start gap-4 bg-white p-4 rounded-lg shadow-sm">
+          <div class="flex-shrink-0 w-14 h-14 bg-genba-teal-700 text-white rounded-full flex items-center justify-center">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+            </svg>
+          </div>
+          <div class="pt-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-sm font-bold text-genba-teal-700">STEP 2</span>
+            </div>
+            <p class="font-semibold text-lg text-genba-navy-900">「田中邸、エアコン設置」と話す</p>
+            <p class="text-sm text-genba-gray-700">帰りの車で、独り言でOK（30秒）</p>
+          </div>
+        </div>
+
+        <!-- ステップ3 -->
+        <div class="flex items-start gap-4 bg-white p-4 rounded-lg shadow-sm">
+          <div class="flex-shrink-0 w-14 h-14 bg-genba-teal-700 text-white rounded-full flex items-center justify-center">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <div class="pt-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-sm font-bold text-genba-teal-700">STEP 3</span>
+            </div>
+            <p class="font-semibold text-lg text-genba-navy-900">日報・請求書の下書きを確認して送る</p>
+            <p class="text-sm text-genba-gray-700">宛名と金額を確認するだけ</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-center text-sm text-genba-gray-700 mt-8">
+        最初は「下書き」から。慣れたら、もっと自動化できます。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== セクション6: オファー + 登録フォーム ===== -->
+  <section id="register" class="py-16 px-4 bg-genba-navy-900">
+    <div class="max-w-xl mx-auto">
+      <h2 class="text-2xl font-bold text-white text-center mb-6">
+        開発パートナー（先行モニター）募集
+      </h2>
+
+      <p class="text-center text-gray-300 mb-6">
+        現場の親方の声を反映した「本当に使える相棒」を作っています。<br />
+        今ご登録の方には、リリース時に以下の特典をお渡しします。
+      </p>
+
+      <!-- 特典リスト -->
+      <div class="bg-genba-teal-900 bg-opacity-50 rounded-lg p-5 mb-8">
+        <ul class="space-y-3 text-white">
+          <li class="flex items-center gap-3">
+            <span class="text-genba-yellow-500">✓</span>
+            <span>Pro機能 3ヶ月無料</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="text-genba-yellow-500">✓</span>
+            <span>ずっと使える「永久割引」</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="text-genba-yellow-500">✓</span>
+            <span>先行モニター枠（優先案内）</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 登録フォーム -->
+      <form action="" method="POST" class="space-y-4">
+        <!-- メールアドレス -->
+        <div>
+          <label for="email" class="block text-sm font-semibold text-gray-300 mb-2">
+            メールアドレス <span class="text-genba-error">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="example@email.com"
+            class="w-full px-4 py-3 rounded-md border-2 border-genba-gray-300 focus:border-genba-teal-700 focus:outline-none text-base min-h-[52px]"
+          />
+        </div>
+
+        <!-- 職種 -->
+        <div>
+          <label for="occupation" class="block text-sm font-semibold text-gray-300 mb-2">
+            職種
+          </label>
+          <select
+            id="occupation"
+            name="occupation"
+            class="w-full px-4 py-3 rounded-md border-2 border-genba-gray-300 focus:border-genba-teal-700 focus:outline-none text-base min-h-[52px] bg-white"
+          >
+            <option value="">選択してください</option>
+            <option value="電気">電気</option>
+            <option value="設備">設備</option>
+            <option value="内装">内装</option>
+            <option value="大工">大工</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+
+        <!-- 送信ボタン -->
+        <button
+          type="submit"
+          class="w-full bg-genba-yellow-500 hover:bg-genba-yellow-600 text-genba-black font-bold text-lg px-8 py-4 rounded-md shadow-lg transition-colors duration-200 min-h-[56px]"
+        >
+          【無料】先行モニターに登録する
+        </button>
+
+        <!-- 同意文 -->
+        <p class="text-xs text-gray-400 text-center">
+          登録により、<a href="/terms" class="underline hover:text-white">利用規約</a>・<a href="/privacy" class="underline hover:text-white">プライバシーポリシー</a>に同意したものとみなします
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== セクション7: FAQ ===== -->
+  <section class="py-16 px-4 bg-genba-white">
+    <div class="max-w-xl mx-auto">
+      <h2 class="text-2xl font-bold text-genba-navy-900 text-center mb-10">
+        よくある質問
+      </h2>
+
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <details class="group bg-genba-gray-100 rounded-lg">
+          <summary class="flex items-center justify-between p-4 cursor-pointer font-semibold text-genba-navy-900">
+            <span>Q1. 今すぐお金がかかりますか？</span>
+            <span class="text-genba-teal-700 group-open:rotate-180 transition-transform">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </span>
+          </summary>
+          <div class="px-4 pb-4 text-genba-gray-700">
+            かかりません。先行モニター登録は無料です。
+          </div>
+        </details>
+
+        <!-- FAQ 2 -->
+        <details class="group bg-genba-gray-100 rounded-lg">
+          <summary class="flex items-center justify-between p-4 cursor-pointer font-semibold text-genba-navy-900">
+            <span>Q2. 難しそうで不安です。</span>
+            <span class="text-genba-teal-700 group-open:rotate-180 transition-transform">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </span>
+          </summary>
+          <div class="px-4 pb-4 text-genba-gray-700">
+            やることは「話す」だけです。最初は下書きを確認するだけにできます。
+          </div>
+        </details>
+
+        <!-- FAQ 3 -->
+        <details class="group bg-genba-gray-100 rounded-lg">
+          <summary class="flex items-center justify-between p-4 cursor-pointer font-semibold text-genba-navy-900">
+            <span>Q3. インボイスに対応できますか？</span>
+            <span class="text-genba-teal-700 group-open:rotate-180 transition-transform">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </span>
+          </summary>
+          <div class="px-4 pb-4 text-genba-gray-700">
+            インボイス要件に沿った形式で請求書を下書きします（最終確認はあなた）。
+          </div>
+        </details>
+
+        <!-- FAQ 4 -->
+        <details class="group bg-genba-gray-100 rounded-lg">
+          <summary class="flex items-center justify-between p-4 cursor-pointer font-semibold text-genba-navy-900">
+            <span>Q4. スマホが苦手でも使えますか？</span>
+            <span class="text-genba-teal-700 group-open:rotate-180 transition-transform">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </span>
+          </summary>
+          <div class="px-4 pb-4 text-genba-gray-700">
+            入力は音声が中心です。文字入力を減らす設計です。
+          </div>
+        </details>
+
+        <!-- FAQ 5 -->
+        <details class="group bg-genba-gray-100 rounded-lg">
+          <summary class="flex items-center justify-between p-4 cursor-pointer font-semibold text-genba-navy-900">
+            <span>Q5. 営業電話が来ませんか？</span>
+            <span class="text-genba-teal-700 group-open:rotate-180 transition-transform">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </span>
+          </summary>
+          <div class="px-4 pb-4 text-genba-gray-700">
+            しつこい営業はしません。必要な連絡だけお送りします。
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== フッター ===== -->
+  <footer class="py-10 px-4 bg-genba-navy-900 text-gray-400">
+    <div class="max-w-xl mx-auto text-center">
+      <!-- ロゴ/サービス名 -->
+      <p class="text-white font-bold text-lg mb-4">現場の相棒</p>
+
+      <!-- 運営者情報 -->
+      <p class="text-sm mb-4">
+        運営: <span class="text-genba-yellow-500">[要設定: 運営者名]</span><br />
+        お問い合わせ: <span class="text-genba-yellow-500">[要設定: メールアドレス]</span>
+      </p>
+
+      <!-- リンク -->
+      <div class="flex justify-center gap-6 text-sm mb-6">
+        <a href="/privacy" class="hover:text-white transition-colors">プライバシーポリシー</a>
+        <a href="/terms" class="hover:text-white transition-colors">利用規約</a>
+      </div>
+
+      <!-- 免責 -->
+      <p class="text-xs text-gray-500 mb-4">
+        本サービスは開発中です。仕様は予告なく変更される場合があります。
+      </p>
+
+      <!-- コピーライト -->
+      <p class="text-xs text-gray-500">
+        &copy; 2026 現場の相棒. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ===== 固定CTA（sticky） ===== -->
+  <div class="fixed bottom-0 left-0 right-0 bg-genba-white border-t border-genba-gray-300 shadow-[0_-2px_8px_rgba(0,0,0,0.1)] p-3 z-50 md:hidden">
+    <a
+      href="#register"
+      class="block w-full bg-genba-teal-700 hover:bg-genba-teal-500 text-white text-center font-semibold px-6 py-3 rounded-md shadow transition-colors duration-200"
+    >
+      【無料】先行モニターに登録する
+    </a>
+  </div>
+
+  <!-- モバイル用の下部パディング -->
+  <div class="h-20 md:hidden"></div>
+</Layout>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>請求書サンプル</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #fff;
+      padding: 24px;
+      width: 420px;
+    }
+    .invoice {
+      border: 1px solid #b8b8b8;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .header {
+      background: #1a1f3d;
+      color: white;
+      padding: 16px 20px;
+    }
+    .header h1 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .header p {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+    .title-section {
+      text-align: center;
+      padding: 20px;
+      border-bottom: 1px solid #b8b8b8;
+    }
+    .title-section h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1f3d;
+      letter-spacing: 0.5em;
+    }
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: #f5f5f5;
+      font-size: 12px;
+      border-bottom: 1px solid #b8b8b8;
+    }
+    .client {
+      padding: 16px 20px;
+      border-bottom: 1px solid #b8b8b8;
+    }
+    .client-label {
+      font-size: 11px;
+      color: #4a4a4a;
+      margin-bottom: 4px;
+    }
+    .client-name {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .total-section {
+      background: #e0f5f5;
+      padding: 16px 20px;
+      border-bottom: 1px solid #b8b8b8;
+    }
+    .total-label {
+      font-size: 12px;
+      color: #4a4a4a;
+      margin-bottom: 4px;
+    }
+    .total-amount {
+      font-size: 28px;
+      font-weight: 700;
+      color: #147878;
+    }
+    .items {
+      padding: 0;
+    }
+    .items table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .items th {
+      background: #f5f5f5;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 1px solid #b8b8b8;
+    }
+    .items td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .items .amount {
+      text-align: right;
+    }
+    .summary {
+      background: #fafafa;
+    }
+    .summary td {
+      border-bottom: none;
+    }
+    .summary .label {
+      text-align: right;
+      padding-right: 20px;
+    }
+    .summary-total {
+      background: #e0f5f5;
+    }
+    .summary-total td {
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .footer {
+      padding: 16px 20px;
+      font-size: 11px;
+      color: #4a4a4a;
+      border-top: 1px solid #b8b8b8;
+    }
+    .footer-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+    }
+    .bank-info {
+      margin-bottom: 12px;
+    }
+    .note {
+      font-size: 10px;
+      color: #4a4a4a;
+    }
+  </style>
+</head>
+<body>
+  <div class="invoice">
+    <div class="header">
+      <h1>山田電気工事</h1>
+      <p>〒123-4567 東京都○○区○○1-2-3</p>
+      <p>TEL: 03-1234-5678 / 登録番号: T1234567890123</p>
+    </div>
+
+    <div class="title-section">
+      <h2>請求書</h2>
+    </div>
+
+    <div class="meta">
+      <span>請求書番号: INV-2026-0001</span>
+      <span>発行日: 2026年1月17日</span>
+    </div>
+
+    <div class="client">
+      <div class="client-label">【請求先】</div>
+      <div class="client-name">田中様</div>
+    </div>
+
+    <div class="total-section">
+      <div class="total-label">ご請求金額</div>
+      <div class="total-amount">¥67,100-</div>
+    </div>
+
+    <div class="items">
+      <table>
+        <thead>
+          <tr>
+            <th>品目</th>
+            <th>数量</th>
+            <th>単価</th>
+            <th class="amount">金額</th>
+            <th>税率</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>エアコン設置工事</td>
+            <td>1式</td>
+            <td>¥50,000</td>
+            <td class="amount">¥50,000</td>
+            <td>10%</td>
+          </tr>
+          <tr>
+            <td>配管工事</td>
+            <td>2m</td>
+            <td>¥3,000</td>
+            <td class="amount">¥6,000</td>
+            <td>10%</td>
+          </tr>
+          <tr>
+            <td>出張費</td>
+            <td>1回</td>
+            <td>¥5,000</td>
+            <td class="amount">¥5,000</td>
+            <td>10%</td>
+          </tr>
+          <tr class="summary">
+            <td colspan="3" class="label">小計</td>
+            <td class="amount">¥61,000</td>
+            <td></td>
+          </tr>
+          <tr class="summary">
+            <td colspan="3" class="label">10%対象 消費税</td>
+            <td class="amount">¥6,100</td>
+            <td></td>
+          </tr>
+          <tr class="summary summary-total">
+            <td colspan="3" class="label">合計</td>
+            <td class="amount">¥67,100</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <div class="footer-title">【お振込先】</div>
+      <div class="bank-info">
+        ○○銀行 ○○支店 普通 1234567<br>
+        口座名義: ヤマダ タロウ
+      </div>
+      <div class="note">※お振込手数料はお客様ご負担でお願いいたします</div>
+    </div>
+  </div>
+</body>
+</html>

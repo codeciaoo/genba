@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日報サンプル</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #fff;
+      padding: 24px;
+      width: 420px;
+    }
+    .report {
+      border: 1px solid #b8b8b8;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .header {
+      background: #1a1f3d;
+      color: white;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .header .title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+    }
+    .meta {
+      padding: 16px 20px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #b8b8b8;
+    }
+    .meta-row {
+      display: flex;
+      margin-bottom: 8px;
+    }
+    .meta-row:last-child {
+      margin-bottom: 0;
+    }
+    .meta-label {
+      font-size: 12px;
+      color: #4a4a4a;
+      width: 60px;
+    }
+    .meta-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    .section {
+      padding: 16px 20px;
+      border-bottom: 1px solid #b8b8b8;
+    }
+    .section:last-child {
+      border-bottom: none;
+    }
+    .section-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #2d3561;
+      background: #f5f5f5;
+      padding: 6px 10px;
+      margin: -16px -20px 12px -20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .work-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .work-item:last-child {
+      margin-bottom: 0;
+    }
+    .check {
+      color: #2d8a4e;
+      margin-right: 8px;
+      font-weight: bold;
+    }
+    .additional {
+      background: rgba(199, 119, 0, 0.05);
+      border-left: 4px solid #c77700;
+      padding: 12px 16px;
+      margin: 0 -20px;
+      padding-left: 36px;
+    }
+    .additional .section-title {
+      background: transparent;
+      margin: -12px -16px 8px -36px;
+      padding-left: 36px;
+      border-bottom: none;
+      color: #c77700;
+    }
+    .note-item {
+      font-size: 13px;
+      color: #4a4a4a;
+      margin-bottom: 6px;
+      padding-left: 16px;
+      position: relative;
+    }
+    .note-item:before {
+      content: "・";
+      position: absolute;
+      left: 0;
+    }
+    .note-item:last-child {
+      margin-bottom: 0;
+    }
+    .footer {
+      padding: 12px 20px;
+      background: #fafafa;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #4a4a4a;
+    }
+    .footer-item {
+      display: flex;
+      gap: 8px;
+    }
+    .footer-label {
+      color: #4a4a4a;
+    }
+    .footer-value {
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+  </style>
+</head>
+<body>
+  <div class="report">
+    <div class="header">
+      <h1>山田電気工事</h1>
+      <span class="title">作業日報</span>
+    </div>
+
+    <div class="meta">
+      <div class="meta-row">
+        <span class="meta-label">日付</span>
+        <span class="meta-value">2026年1月17日（金）</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">現場名</span>
+        <span class="meta-value">田中邸</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">住所</span>
+        <span class="meta-value">東京都○○区○○2-3-4</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">【作業内容】</div>
+      <div class="work-item">
+        <span class="check">✓</span>
+        <span>エアコン設置（リビング 14畳用）</span>
+      </div>
+      <div class="work-item">
+        <span class="check">✓</span>
+        <span>配管工事 2m</span>
+      </div>
+      <div class="work-item">
+        <span class="check">✓</span>
+        <span>試運転確認</span>
+      </div>
+    </div>
+
+    <div class="section additional">
+      <div class="section-title">【追加作業・変更】</div>
+      <div class="note-item">配管経路変更のため追加2m（お客様了承済み）</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">【備考・申し送り】</div>
+      <div class="note-item">次回：室外機カバー取付予定</div>
+      <div class="note-item">駐車場：玄関前OK</div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-item">
+        <span class="footer-label">作業者:</span>
+        <span class="footer-value">山田太郎</span>
+      </div>
+      <div class="footer-item">
+        <span class="footer-label">作業時間:</span>
+        <span class="footer-value">9:00 - 12:30（3.5h）</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

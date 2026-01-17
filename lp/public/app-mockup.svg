@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 560" fill="none">
+  <!-- スマートフォンの外枠 -->
+  <rect x="10" y="10" width="260" height="540" rx="36" fill="#1a1f3d" stroke="#2d3561" stroke-width="4"/>
+
+  <!-- 画面部分 -->
+  <rect x="22" y="50" width="236" height="460" rx="4" fill="#ffffff"/>
+
+  <!-- ステータスバー -->
+  <rect x="22" y="50" width="236" height="28" fill="#f5f5f5"/>
+  <text x="40" y="68" font-family="system-ui, sans-serif" font-size="12" fill="#666">9:41</text>
+  <circle cx="220" cy="64" r="6" fill="#147878"/>
+  <rect x="200" y="60" width="12" height="8" rx="2" fill="#147878"/>
+
+  <!-- ノッチ -->
+  <rect x="90" y="18" width="100" height="24" rx="12" fill="#0d0d0d"/>
+
+  <!-- ヘッダー：アプリ名 -->
+  <rect x="22" y="78" width="236" height="50" fill="#1a1f3d"/>
+  <text x="140" y="108" font-family="system-ui, sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">現場の相棒</text>
+
+  <!-- メインコンテンツエリア -->
+  <rect x="32" y="138" width="216" height="100" rx="12" fill="#f0f9f9" stroke="#147878" stroke-width="2"/>
+
+  <!-- マイクアイコン（大きく中央に） -->
+  <circle cx="140" cy="188" r="30" fill="#147878"/>
+  <path d="M140 168 L140 198 M130 173 L130 193 C130 198 135 203 140 203 C145 203 150 198 150 193 L150 173 C150 168 145 163 140 163 C135 163 130 168 130 173" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M125 193 C125 203 132 210 140 210 C148 210 155 203 155 193" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <line x1="140" y1="210" x2="140" y2="218" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- 「タップして話す」テキスト -->
+  <text x="140" y="228" font-family="system-ui, sans-serif" font-size="11" fill="#147878" text-anchor="middle">タップして話す</text>
+
+  <!-- 音声入力のテキスト表示エリア -->
+  <rect x="32" y="248" width="216" height="80" rx="8" fill="#f5f5f5"/>
+  <text x="42" y="270" font-family="system-ui, sans-serif" font-size="11" fill="#888">音声入力の例：</text>
+  <text x="42" y="290" font-family="system-ui, sans-serif" font-size="12" fill="#1a1f3d">「田中邸、エアコン設置完了。</text>
+  <text x="42" y="308" font-family="system-ui, sans-serif" font-size="12" fill="#1a1f3d">配管2メートル追加。以上」</text>
+
+  <!-- 音声波形アニメーション風の表示 -->
+  <g transform="translate(32, 338)">
+    <rect x="0" y="8" width="216" height="40" rx="4" fill="#e0f5f5"/>
+    <rect x="20" y="18" width="4" height="20" rx="2" fill="#147878"/>
+    <rect x="32" y="14" width="4" height="28" rx="2" fill="#147878"/>
+    <rect x="44" y="10" width="4" height="36" rx="2" fill="#147878"/>
+    <rect x="56" y="16" width="4" height="24" rx="2" fill="#147878"/>
+    <rect x="68" y="12" width="4" height="32" rx="2" fill="#147878"/>
+    <rect x="80" y="18" width="4" height="20" rx="2" fill="#147878"/>
+    <rect x="92" y="14" width="4" height="28" rx="2" fill="#147878"/>
+    <rect x="104" y="20" width="4" height="16" rx="2" fill="#147878"/>
+    <rect x="116" y="12" width="4" height="32" rx="2" fill="#147878"/>
+    <rect x="128" y="16" width="4" height="24" rx="2" fill="#147878"/>
+    <rect x="140" y="10" width="4" height="36" rx="2" fill="#147878"/>
+    <rect x="152" y="14" width="4" height="28" rx="2" fill="#147878"/>
+    <rect x="164" y="18" width="4" height="20" rx="2" fill="#147878"/>
+    <rect x="176" y="12" width="4" height="32" rx="2" fill="#147878"/>
+    <rect x="188" y="16" width="4" height="24" rx="2" fill="#147878"/>
+  </g>
+
+  <!-- アクションボタン -->
+  <rect x="32" y="398" width="100" height="44" rx="8" fill="#147878"/>
+  <text x="82" y="424" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">日報作成</text>
+
+  <rect x="148" y="398" width="100" height="44" rx="8" fill="#f5c518"/>
+  <text x="198" y="424" font-family="system-ui, sans-serif" font-size="12" font-weight="bold" fill="#1a1f3d" text-anchor="middle">請求書作成</text>
+
+  <!-- 下部ナビゲーション -->
+  <rect x="22" y="458" width="236" height="52" fill="#f5f5f5"/>
+  <line x1="22" y1="458" x2="258" y2="458" stroke="#e5e5e5" stroke-width="1"/>
+
+  <!-- ナビアイコン：ホーム -->
+  <g transform="translate(55, 468)">
+    <rect x="0" y="8" width="16" height="12" fill="none" stroke="#147878" stroke-width="2"/>
+    <path d="M-2 10 L8 2 L18 10" stroke="#147878" stroke-width="2" fill="none"/>
+    <text x="8" y="32" font-family="system-ui, sans-serif" font-size="9" fill="#147878" text-anchor="middle">ホーム</text>
+  </g>
+
+  <!-- ナビアイコン：履歴 -->
+  <g transform="translate(125, 468)">
+    <circle cx="8" cy="10" r="8" fill="none" stroke="#888" stroke-width="2"/>
+    <path d="M8 6 L8 10 L11 12" stroke="#888" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <text x="8" y="32" font-family="system-ui, sans-serif" font-size="9" fill="#888" text-anchor="middle">履歴</text>
+  </g>
+
+  <!-- ナビアイコン：設定 -->
+  <g transform="translate(195, 468)">
+    <circle cx="8" cy="10" r="6" fill="none" stroke="#888" stroke-width="2"/>
+    <circle cx="8" cy="10" r="2" fill="#888"/>
+    <text x="8" y="32" font-family="system-ui, sans-serif" font-size="9" fill="#888" text-anchor="middle">設定</text>
+  </g>
+
+  <!-- ホームインジケーター -->
+  <rect x="100" y="520" width="80" height="5" rx="2.5" fill="#333"/>
+</svg>
