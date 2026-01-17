@@ -18,8 +18,8 @@ GENBA GEARで採用している技術スタックの詳細と選定理由をま�
 | バックエンド | Supabase | - | BaaS (Auth, DB, Storage, Functions) |
 | データベース | PostgreSQL | 15+ | Supabaseマネージド |
 | AI/音声処理 | OpenAI API | - | Whisper + GPT-4o-mini |
-| ランディングLP | Astro | v4 | 静的サイト生成 |
-| Web管理画面 | Next.js | 14 (App Router) | チームプラン向け管理画面 |
+| ランディングLP | Astro | v4 | 静的サイト生成（Vercel） |
+| Web管理画面 | Remix | v2 | チームプラン向け管理画面（Cloudflare Pages） |
 | スタイリング | Tailwind CSS / NativeWind | v3 | ユーティリティファーストCSS |
 
 ---
@@ -208,21 +208,22 @@ const EXTRACTION_PROMPT = `
 - **高速**: 静的サイト生成でLighthouse満点
 - **柔軟**: 必要な箇所だけReact/Vue等を使用可能
 
-### Next.js 14（Web管理画面）
+### Remix v2（Web管理画面）
 
 **選定理由**:
-- **SSR対応**: SEO・初期表示高速化
-- **App Router**: 最新のReact Server Components
-- **Vercelデプロイ**: ゼロコンフィグデプロイ
-- **Supabase統合**: @supabase/auth-helpers-nextjs
+- **Cloudflare最適**: Edge Workersとの相性が抜群
+- **Web標準準拠**: Fetch API、FormData等の標準APIベース
+- **高速**: エッジでSSR、世界中で低レイテンシ
+- **シンプル**: ローダー/アクションパターンで明快なデータフロー
 
 **技術構成**:
 ```json
 {
   "dependencies": {
-    "next": "14.x",
+    "@remix-run/cloudflare": "^2.0.0",
+    "@remix-run/cloudflare-pages": "^2.0.0",
+    "@remix-run/react": "^2.0.0",
     "@supabase/supabase-js": "^2.0.0",
-    "@supabase/auth-helpers-nextjs": "^0.8.0",
     "tailwindcss": "^3.0.0",
     "recharts": "^2.0.0"
   }
@@ -289,14 +290,15 @@ module.exports = {
 ## インフラ構成
 
 ```
-┌─────────────────────────────────────────────────┐
-│                    Vercel                        │
-│  ┌─────────────┐    ┌─────────────┐             │
-│  │    LP       │    │  管理画面    │             │
-│  │   Astro     │    │  Next.js    │             │
-│  └─────────────┘    └─────────────┘             │
-└─────────────────────────────────────────────────┘
-                         │
+┌───────────────────────┐    ┌───────────────────────┐
+│        Vercel         │    │   Cloudflare Pages    │
+│  ┌─────────────────┐  │    │  ┌─────────────────┐  │
+│  │       LP        │  │    │  │    管理画面      │  │
+│  │     Astro       │  │    │  │     Remix       │  │
+│  └─────────────────┘  │    │  └─────────────────┘  │
+└───────────────────────┘    └───────────────────────┘
+              │                          │
+              └──────────┬───────────────┘
                          ▼
 ┌─────────────────────────────────────────────────┐
 │                   Supabase                       │

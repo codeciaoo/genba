@@ -18,6 +18,13 @@
 |---------|------|---------|
 | `EXPO_TOKEN` | Expo APIトークン | [Expo Dashboard](https://expo.dev/accounts/[account]/settings/access-tokens) → Create Token |
 
+### Web管理画面用（Cloudflare）
+
+| Secret名 | 説明 | 取得方法 |
+|---------|------|---------|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare APIトークン | [Cloudflare Dashboard](https://dash.cloudflare.com/profile/api-tokens) → Create Token |
+| `CLOUDFLARE_ACCOUNT_ID` | CloudflareアカウントID | Cloudflare Dashboard → Workers & Pages → 右サイドバー |
+
 ### App Store / Google Play（本番リリース時）
 
 | Secret名 | 説明 | 取得方法 |
@@ -59,7 +66,24 @@ eas login
 # https://expo.dev/accounts/[account]/settings/access-tokens
 ```
 
-### 3. GitHub Secretsへの登録
+### 3. Cloudflare連携（管理画面用）
+
+```bash
+# Wrangler CLIをインストール
+npm i -g wrangler
+
+# ログイン
+wrangler login
+
+# APIトークンを作成（Edit Cloudflare Workers権限が必要）
+# https://dash.cloudflare.com/profile/api-tokens
+# テンプレート: "Edit Cloudflare Workers" を使用
+
+# アカウントIDを確認
+# Cloudflare Dashboard → Workers & Pages → 右サイドバーに表示
+```
+
+### 4. GitHub Secretsへの登録
 
 1. GitHubリポジトリ → Settings → Secrets and variables → Actions
 2. 「New repository secret」をクリック

@@ -148,8 +148,8 @@
 | ローカルDB | WatermelonDB | オフライン優先、SQLiteベース、高速同期 |
 | バックエンド | Supabase | PostgreSQL + Auth + Storage + Edge Functions |
 | AI処理 | OpenAI (Whisper + GPT-4o-mini) | 騒音耐性文字起こし + 構造化抽出 |
-| ランディングLP | Astro + Tailwind | 軽量・高速、SEO対応 |
-| Web管理画面(v2) | Next.js 14 | SSR対応、Vercelデプロイ |
+| ランディングLP | Astro + Tailwind | 軽量・高速、Vercelデプロイ |
+| Web管理画面(v2) | Remix v2 | Cloudflare Pages、エッジSSR |
 
 → 詳細は [tech-stack.md](./tech-stack.md) を参照
 
