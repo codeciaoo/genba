@@ -19,7 +19,7 @@ GENBA GEARで採用している技術スタックの詳細と選定理由をま�
 | データベース | PostgreSQL | 15+ | Supabaseマネージド |
 | AI/音声処理 | OpenAI API | - | Whisper + GPT-4o-mini |
 | ランディングLP | Astro | v4 | 静的サイト生成（Vercel） |
-| Web管理画面 | Remix | v2 | チームプラン向け管理画面（Cloudflare Pages） |
+| Web管理画面 | React Router | v7 | チームプラン向け管理画面（Cloudflare Pages） |
 | スタイリング | Tailwind CSS / NativeWind | v3 | ユーティリティファーストCSS |
 
 ---
@@ -208,9 +208,10 @@ const EXTRACTION_PROMPT = `
 - **高速**: 静的サイト生成でLighthouse満点
 - **柔軟**: 必要な箇所だけReact/Vue等を使用可能
 
-### Remix v2（Web管理画面）
+### React Router v7（Web管理画面）
 
 **選定理由**:
+- **Remix v2の後継**: Remix v2の機能を引き継ぎつつ安定
 - **Cloudflare最適**: Edge Workersとの相性が抜群
 - **Web標準準拠**: Fetch API、FormData等の標準APIベース
 - **高速**: エッジでSSR、世界中で低レイテンシ
@@ -220,9 +221,10 @@ const EXTRACTION_PROMPT = `
 ```json
 {
   "dependencies": {
-    "@remix-run/cloudflare": "^2.0.0",
-    "@remix-run/cloudflare-pages": "^2.0.0",
-    "@remix-run/react": "^2.0.0",
+    "react-router": "^7.0.0",
+    "@react-router/cloudflare": "^7.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "@supabase/supabase-js": "^2.0.0",
     "tailwindcss": "^3.0.0",
     "recharts": "^2.0.0"
@@ -294,7 +296,7 @@ module.exports = {
 │        Vercel         │    │   Cloudflare Pages    │
 │  ┌─────────────────┐  │    │  ┌─────────────────┐  │
 │  │       LP        │  │    │  │    管理画面      │  │
-│  │     Astro       │  │    │  │     Remix       │  │
+│  │     Astro       │  │    │  │ React Router v7 │  │
 │  └─────────────────┘  │    │  └─────────────────┘  │
 └───────────────────────┘    └───────────────────────┘
               │                          │

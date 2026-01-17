@@ -220,31 +220,35 @@ PC向けのWeb管理画面を提供し、チーム全体の管理業務を効率
 ### フレームワーク
 
 ```
-Next.js 14 (App Router)
+React Router v7 + Cloudflare Pages
 ├── app/
-│   ├── (auth)/
-│   │   ├── login/
-│   │   └── invite/[code]/
-│   ├── (dashboard)/
-│   │   ├── layout.tsx      # サイドバー共通
-│   │   ├── page.tsx        # ダッシュボード
-│   │   ├── members/
-│   │   ├── reports/
-│   │   ├── analytics/
-│   │   ├── invoices/
-│   │   ├── customers/
-│   │   ├── billing/
-│   │   └── settings/
-│   └── api/
+│   ├── routes/
+│   │   ├── _index.tsx      # ダッシュボード
+│   │   ├── login.tsx
+│   │   ├── invite.$code.tsx
+│   │   ├── members.tsx
+│   │   ├── reports.tsx
+│   │   ├── reports.$id.tsx
+│   │   ├── analytics.tsx
+│   │   ├── invoices.tsx
+│   │   ├── invoices.$id.tsx
+│   │   ├── customers.tsx
+│   │   ├── customers.$id.tsx
+│   │   ├── billing.tsx
+│   │   └── settings.tsx
+│   ├── root.tsx
+│   └── entry.server.tsx
 ├── components/
 │   ├── ui/                  # 共通UIコンポーネント
 │   ├── dashboard/
 │   ├── members/
 │   └── reports/
 ├── lib/
-│   ├── supabase/
+│   ├── supabase.server.ts
 │   └── utils/
-└── styles/
+├── functions/
+│   └── [[path]].ts
+└── wrangler.toml
 ```
 
 ### 認証フロー
@@ -395,7 +399,7 @@ USING (
 
 ### Phase 1: 基盤構築
 
-- [ ] Next.js 14プロジェクト初期化
+- [ ] React Router v7 + Cloudflare Pagesプロジェクト初期化
 - [ ] Supabase Auth連携
 - [ ] 共通レイアウト（サイドバー、ヘッダー）
 - [ ] ルーティング設定

@@ -1,6 +1,6 @@
 # GENBA GEAR 画面遷移図（Web管理画面）
 
-> このドキュメントはNext.jsで構築するWeb管理画面の画面遷移図です。
+> このドキュメントはReact Router v7 + Cloudflare Pagesで構築するWeb管理画面の画面遷移図です。
 > モバイルアプリについては [screen-flow.md](./screen-flow.md) を参照してください。
 
 ## 全体遷移図

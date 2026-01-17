@@ -149,7 +149,7 @@
 | バックエンド | Supabase | PostgreSQL + Auth + Storage + Edge Functions |
 | AI処理 | OpenAI (Whisper + GPT-4o-mini) | 騒音耐性文字起こし + 構造化抽出 |
 | ランディングLP | Astro + Tailwind | 軽量・高速、Vercelデプロイ |
-| Web管理画面(v2) | Remix v2 | Cloudflare Pages、エッジSSR |
+| Web管理画面(v2) | React Router v7 | Cloudflare Pages、エッジSSR |
 
 → 詳細は [tech-stack.md](./tech-stack.md) を参照
 

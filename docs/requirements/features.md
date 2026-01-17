@@ -150,10 +150,10 @@
 
 | レイヤー | 技術 | 理由 |
 |---------|------|------|
-| フレームワーク | Next.js 14 (App Router) | SSR対応、Vercelデプロイ容易 |
+| フレームワーク | React Router v7 | SSR対応、Cloudflare Pagesデプロイ |
 | スタイリング | Tailwind CSS | モバイルアプリと統一 |
 | 認証 | Supabase Auth | モバイルと共通 |
-| データ取得 | Supabase Client | リアルタイム更新対応 |
+| データ取得 | Loader/Action + Supabase | シンプルなデータフロー |
 | グラフ | Recharts | シンプルで軽量 |
 
 ---

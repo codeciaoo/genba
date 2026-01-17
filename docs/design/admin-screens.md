@@ -1,16 +1,16 @@
 # GENBA GEAR チーム管理画面（Web）
 
-> このドキュメントはNext.js (App Router)で構築するWeb管理画面の画面一覧です。
+> このドキュメントはReact Router v7 + Cloudflare Pagesで構築するWeb管理画面の画面一覧です。
 > モバイルアプリについては [screens.md](./screens.md) を参照してください。
 
 ## 技術スタック
 
 | レイヤー | 技術 | 理由 |
 |---------|------|------|
-| フレームワーク | Next.js 14 (App Router) | SSR対応、Server Actions、Vercelデプロイ |
+| フレームワーク | React Router v7 | SSR対応、ローダー/アクションパターン、Cloudflare Pagesデプロイ |
 | スタイリング | Tailwind CSS | モバイルアプリと統一 |
 | 認証 | Supabase Auth | モバイルと共通基盤 |
-| データ取得 | Server Actions + Supabase | シンプルなデータフロー |
+| データ取得 | Loader/Action + Supabase | シンプルなデータフロー |
 | グラフ | Recharts | 軽量・シンプル |
 | フォーム | React Hook Form + Zod | バリデーション |
 
@@ -425,43 +425,24 @@
 ## ディレクトリ構成（実装）
 
 ```
-admin/                          # Next.js 14 プロジェクト
+admin/                          # React Router v7 + Cloudflare Pages プロジェクト
 ├── app/
-│   ├── (auth)/
-│   │   ├── login/
-│   │   │   └── page.tsx
-│   │   └── invite/
-│   │       └── [code]/
-│   │           └── page.tsx
-│   ├── (dashboard)/
-│   │   ├── layout.tsx          # サイドバー共通レイアウト
-│   │   ├── page.tsx            # ダッシュボード
-│   │   ├── members/
-│   │   │   └── page.tsx
-│   │   ├── reports/
-│   │   │   ├── page.tsx
-│   │   │   └── [id]/
-│   │   │       └── page.tsx
-│   │   ├── analytics/
-│   │   │   └── page.tsx
-│   │   ├── invoices/
-│   │   │   ├── page.tsx
-│   │   │   └── [id]/
-│   │   │       └── page.tsx
-│   │   ├── customers/
-│   │   │   ├── page.tsx
-│   │   │   └── [id]/
-│   │   │       └── page.tsx
-│   │   ├── billing/
-│   │   │   └── page.tsx
-│   │   └── settings/
-│   │       └── page.tsx
-│   ├── api/
-│   │   └── webhooks/
-│   │       └── stripe/
-│   │           └── route.ts
-│   ├── layout.tsx
-│   └── globals.css
+│   ├── routes/
+│   │   ├── _index.tsx          # ダッシュボード (/)
+│   │   ├── login.tsx           # ログイン
+│   │   ├── invite.$code.tsx    # 招待受諾
+│   │   ├── members.tsx         # メンバー管理
+│   │   ├── reports.tsx         # 日報一覧
+│   │   ├── reports.$id.tsx     # 日報詳細
+│   │   ├── analytics.tsx       # 集約レポート
+│   │   ├── invoices.tsx        # 請求書一覧
+│   │   ├── invoices.$id.tsx    # 請求書詳細
+│   │   ├── customers.tsx       # 顧客一覧
+│   │   ├── customers.$id.tsx   # 顧客詳細
+│   │   ├── billing.tsx         # プラン・課金
+│   │   └── settings.tsx        # チーム設定
+│   ├── root.tsx                # ルートレイアウト
+│   └── entry.server.tsx        # Cloudflare Workers エントリ
 ├── components/
 │   ├── ui/                     # 共通UIコンポーネント
 │   │   ├── button.tsx
@@ -478,18 +459,11 @@ admin/                          # Next.js 14 プロジェクト
 │       ├── analytics/
 │       └── invoices/
 ├── lib/
-│   ├── supabase/
-│   │   ├── client.ts
-│   │   ├── server.ts
-│   │   └── middleware.ts
-│   ├── actions/                # Server Actions
-│   │   ├── members.ts
-│   │   ├── reports.ts
-│   │   ├── invoices.ts
-│   │   └── billing.ts
+│   ├── supabase.server.ts      # Supabaseクライアント（サーバー用）
 │   └── utils/
-├── styles/
-│   └── tailwind.config.ts
+├── functions/                   # Cloudflare Pages Functions
+│   └── [[path]].ts             # キャッチオールルート
+├── wrangler.toml               # Cloudflare設定
 └── package.json
 ```
 
