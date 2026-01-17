@@ -44,3 +44,4 @@ export async function testDatabaseConnection(): Promise<boolean> {
 
 export { schema } from './schema';
 export * from './models';
+export { DatabaseProvider, useDatabase } from './DatabaseProvider';
