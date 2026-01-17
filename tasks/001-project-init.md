@@ -119,6 +119,44 @@ module.exports = {
 | `Input` | テキスト入力 |
 | `Badge` | ステータスバッジ |
 
+### 6. スプラッシュ画面
+
+```typescript
+// app/index.tsx（エントリーポイント）
+export default function SplashScreen() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading) {
+      // 認証状態に応じて遷移
+      if (user) {
+        router.replace('/(tabs)/');
+      } else {
+        router.replace('/auth/login');
+      }
+    }
+  }, [user, loading]);
+
+  return (
+    <View className="flex-1 items-center justify-center bg-primary-700">
+      {/* GENBA GEARロゴ */}
+      <Image source={require('../assets/logo.png')} className="w-48 h-48" />
+      {/* ローディングインジケーター */}
+      <ActivityIndicator size="large" color="white" className="mt-8" />
+    </View>
+  );
+}
+```
+
+**スプラッシュ画面仕様**:
+- GENBA GEARロゴ中央表示
+- ローディングインジケーター
+- 背景色: `--genba-teal-700`
+- 認証状態チェック後、自動遷移
+  - 認証済み → ホーム `/(tabs)/`
+  - 未認証 → ログイン `/auth/login`
+
 ## 実行コマンド
 
 ```bash
@@ -140,4 +178,6 @@ npx expo start
 - [ ] ディレクトリ構成が整っている
 - [ ] NativeWindが動作している
 - [ ] 基本UIコンポーネントが作成されている
+- [ ] スプラッシュ画面が表示される
+- [ ] 認証状態に応じてホームまたはログインへ遷移する
 - [ ] `npx expo start`でアプリが起動する

@@ -1,0 +1,87 @@
+name: バグ報告
+description: バグを見つけた場合はこちら
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        バグ報告ありがとうございます。できるだけ詳細に記載してください。
+
+  - type: textarea
+    id: description
+    attributes:
+      label: バグの説明
+      description: 何が起きたか簡潔に説明してください
+      placeholder: ボタンをタップしても反応しない
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順
+      description: バグを再現する手順を記載してください
+      placeholder: |
+        1. ホーム画面を開く
+        2. マイクボタンをタップ
+        3. 録音を開始
+        4. エラーが発生
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待する動作
+      description: 本来どうなるべきか
+      placeholder: 録音が開始されるべき
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 実際の動作
+      description: 実際にどうなったか
+      placeholder: 何も起きない / エラーメッセージが表示される
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: プラットフォーム
+      options:
+        - iOS
+        - Android
+        - Web (LP)
+        - その他
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: アプリバージョン
+      description: アプリのバージョン（設定画面で確認可能）
+      placeholder: "1.0.0"
+
+  - type: input
+    id: device
+    attributes:
+      label: デバイス情報
+      description: 機種名とOSバージョン
+      placeholder: "iPhone 15 Pro / iOS 18.0"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: ログ・スクリーンショット
+      description: エラーログやスクリーンショットがあれば添付してください
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 補足情報
+      description: その他気づいたことがあれば

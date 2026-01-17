@@ -12,11 +12,22 @@
 
 ## 目次
 
+### アーキテクチャ概要
+
 | ドキュメント | 内容 |
 |-------------|------|
 | [本ドキュメント](./README.md) | アーキテクチャ概要・設計原則 |
 | [技術スタック](./tech-stack.md) | 使用技術の詳細と選定理由 |
 | [システム構成図](./system-diagram.md) | 全体構成・データフロー |
+
+### 開発ガイドライン
+
+| ドキュメント | 内容 |
+|-------------|------|
+| [コーディングガイドライン](./coding-guidelines.md) | レイヤー構成・責務分担・命名規則 |
+| [テスト戦略](./testing-strategy.md) | テストの種類・カバレッジ目標・テストの書き方 |
+| [データベーススキーマ](./database-schema.md) | テーブル定義（PostgreSQL / WatermelonDB） |
+| [API設計](./api-design.md) | Edge Functions API仕様・エラーハンドリング |
 
 ### 詳細仕様（.claude/skills/）
 
@@ -24,8 +35,8 @@
 
 | ファイル | 内容 |
 |---------|------|
-| [data-model.md](/.claude/skills/genba-app-architecture/references/data-model.md) | データモデル・ER図・SQL定義 |
-| [offline-sync.md](/.claude/skills/genba-app-architecture/references/offline-sync.md) | オフライン同期設計・WatermelonDB |
+| [data-model.md](/.claude/skills/genba-app-architecture/references/data-model.md) | データモデル概念・同期戦略 |
+| [offline-sync.md](/.claude/skills/genba-app-architecture/references/offline-sync.md) | オフライン同期実装詳細・WatermelonDB |
 | [voice-processing.md](/.claude/skills/genba-app-architecture/references/voice-processing.md) | 音声処理パイプライン・AI連携 |
 | [pdf-generation.md](/.claude/skills/genba-app-architecture/references/pdf-generation.md) | PDF生成・帳票出力 |
 

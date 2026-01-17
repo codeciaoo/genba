@@ -185,6 +185,141 @@ export async function getWeather(lat: number, lon: number): Promise<WeatherData>
 }
 ```
 
+### 7. 手動作業記録入力画面（フォールバック）
+
+音声認識が失敗した場合、または音声入力が使えない環境向けのフォールバック画面。
+
+```typescript
+// app/manual-input.tsx
+export default function ManualInputScreen() {
+  const [siteName, setSiteName] = useState('');
+  const [workItems, setWorkItems] = useState<WorkItem[]>([{ id: '1', content: '' }]);
+  const [notes, setNotes] = useState('');
+
+  const addWorkItem = () => {
+    setWorkItems([...workItems, { id: Date.now().toString(), content: '' }]);
+  };
+
+  const updateWorkItem = (id: string, content: string) => {
+    setWorkItems(workItems.map(item =>
+      item.id === id ? { ...item, content } : item
+    ));
+  };
+
+  const removeWorkItem = (id: string) => {
+    if (workItems.length > 1) {
+      setWorkItems(workItems.filter(item => item.id !== id));
+    }
+  };
+
+  const handleSave = async () => {
+    // バリデーション
+    if (!siteName.trim()) {
+      Alert.alert('エラー', '現場名を入力してください');
+      return;
+    }
+    if (!workItems.some(item => item.content.trim())) {
+      Alert.alert('エラー', '作業内容を1つ以上入力してください');
+      return;
+    }
+
+    // GPS/天気取得
+    const gpsLocation = await getCurrentLocation();
+    const weather = await getWeather(gpsLocation.latitude, gpsLocation.longitude);
+
+    // 作業記録保存
+    const workRecord = await createWorkRecord({
+      voiceTranscript: null, // 手動入力なので音声データなし
+      structuredData: {
+        location: siteName,
+        workItems: workItems.filter(item => item.content.trim()),
+        notes,
+      },
+      gpsLocation,
+      weather: weather.description,
+      temperature: weather.temperature,
+      recordedAt: new Date(),
+      status: 'draft',
+    });
+
+    // 下書き確認画面へ
+    router.replace(`/draft/${workRecord.id}`);
+  };
+
+  return (
+    <ScrollView className="flex-1 bg-background p-4">
+      <Text className="text-xl font-bold mb-4">作業記録を入力</Text>
+
+      {/* 現場名 */}
+      <Text className="font-semibold mb-2">現場名</Text>
+      <TextInput
+        value={siteName}
+        onChangeText={setSiteName}
+        placeholder="田中邸、○○ビル など"
+        className="border border-gray-300 rounded-lg p-3 mb-4"
+      />
+
+      {/* 作業内容リスト */}
+      <Text className="font-semibold mb-2">作業内容</Text>
+      {workItems.map((item, index) => (
+        <View key={item.id} className="flex-row items-center mb-2">
+          <TextInput
+            value={item.content}
+            onChangeText={(text) => updateWorkItem(item.id, text)}
+            placeholder={`作業${index + 1}を入力`}
+            className="flex-1 border border-gray-300 rounded-lg p-3"
+          />
+          {workItems.length > 1 && (
+            <TouchableOpacity
+              onPress={() => removeWorkItem(item.id)}
+              className="ml-2 p-2"
+            >
+              <Text className="text-error">✕</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      ))}
+      <TouchableOpacity
+        onPress={addWorkItem}
+        className="border border-dashed border-primary rounded-lg p-3 items-center mb-4"
+      >
+        <Text className="text-primary">＋ 作業を追加</Text>
+      </TouchableOpacity>
+
+      {/* 備考 */}
+      <Text className="font-semibold mb-2">備考・メモ（任意）</Text>
+      <TextInput
+        value={notes}
+        onChangeText={setNotes}
+        placeholder="特記事項があれば入力"
+        multiline
+        numberOfLines={3}
+        className="border border-gray-300 rounded-lg p-3 mb-6"
+      />
+
+      {/* 保存ボタン */}
+      <Button
+        title="記録を保存"
+        onPress={handleSave}
+        className="bg-primary py-4"
+      />
+    </ScrollView>
+  );
+}
+```
+
+**手動入力画面仕様**:
+- パス: `/manual-input`
+- 進入経路:
+  - 音声認識失敗エラー画面から「手動で入力する」ボタン
+  - ホーム画面から（将来的に追加ボタン）
+- 入力項目:
+  - 現場名（必須）: コンボボックス（過去の現場名をサジェスト）
+  - 作業内容（必須）: 複数入力可能、追加・削除ボタン
+  - 備考・メモ（任意）
+- GPS/天気: 保存時に自動取得
+- 遷移先: 保存成功 → 下書き確認画面 `/draft/[id]`
+
 ## 実行コマンド
 
 ```bash
@@ -200,6 +335,7 @@ voice-to-documentスキルを参照して、
 4. 文字起こし確認・修正UI
 5. オフラインキュー
 6. GPS/天気自動取得
+7. 手動入力画面（音声認識失敗時のフォールバック）
 ```
 
 ## 完了条件
@@ -214,3 +350,6 @@ voice-to-documentスキルを参照して、
 - [ ] GPS/天気が自動取得される
 - [ ] オフラインでも録音・保存できる
 - [ ] オンライン復帰時に自動処理される
+- [ ] 認識失敗時に「手動入力」オプションが表示される
+- [ ] 手動入力フォームで作業記録を作成できる
+- [ ] 手動入力からも下書き確認→日報生成フローに進める

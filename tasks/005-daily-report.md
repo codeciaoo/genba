@@ -204,14 +204,146 @@ function buildReportHTML(report: DailyReport, userProfile: UserProfile): string 
 }
 ```
 
-### 4. 日報一覧画面
+### 4. 日報一覧画面（カレンダー/リストビュー）
 
 ```typescript
 // app/(tabs)/reports.tsx
-// 日付別の日報一覧
-// ステータスフィルター（下書き/確定/送信済み）
-// PDF表示・共有
+import { useState } from 'react';
+import { Calendar } from 'react-native-calendars';
+
+type ViewMode = 'calendar' | 'list';
+
+export default function ReportsScreen() {
+  const [viewMode, setViewMode] = useState<ViewMode>('calendar');
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'finalized' | 'sent'>('all');
+
+  const { data: reports } = useReports({ statusFilter });
+
+  // カレンダー用のマーク付き日付を生成
+  const markedDates = useMemo(() => {
+    const marks: Record<string, { marked: boolean; dotColor: string }> = {};
+    reports?.forEach(report => {
+      const color = report.status === 'draft' ? '#c77700' :
+                    report.status === 'finalized' ? '#2d8a4e' : '#147878';
+      marks[report.reportDate] = { marked: true, dotColor: color };
+    });
+    return marks;
+  }, [reports]);
+
+  return (
+    <View className="flex-1 bg-background">
+      {/* ビュー切替トグル */}
+      <View className="flex-row p-4 border-b border-gray-300">
+        <TouchableOpacity
+          onPress={() => setViewMode('calendar')}
+          className={`flex-1 py-2 rounded-l-lg ${viewMode === 'calendar' ? 'bg-primary' : 'bg-gray-200'}`}
+        >
+          <Text className={viewMode === 'calendar' ? 'text-white text-center' : 'text-center'}>
+            カレンダー
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setViewMode('list')}
+          className={`flex-1 py-2 rounded-r-lg ${viewMode === 'list' ? 'bg-primary' : 'bg-gray-200'}`}
+        >
+          <Text className={viewMode === 'list' ? 'text-white text-center' : 'text-center'}>
+            リスト
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* ステータスフィルター */}
+      <ScrollView horizontal className="p-2 border-b border-gray-200">
+        {['all', 'draft', 'finalized', 'sent'].map((status) => (
+          <TouchableOpacity
+            key={status}
+            onPress={() => setStatusFilter(status as any)}
+            className={`px-4 py-2 mr-2 rounded-full ${statusFilter === status ? 'bg-primary' : 'bg-gray-200'}`}
+          >
+            <Text className={statusFilter === status ? 'text-white' : ''}>
+              {status === 'all' ? 'すべて' :
+               status === 'draft' ? '下書き' :
+               status === 'finalized' ? '確定' : '送信済'}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+
+      {/* カレンダービュー */}
+      {viewMode === 'calendar' && (
+        <View>
+          <Calendar
+            markedDates={markedDates}
+            onDayPress={(day) => setSelectedDate(day.dateString)}
+            theme={{
+              todayTextColor: '#147878',
+              selectedDayBackgroundColor: '#147878',
+              arrowColor: '#147878',
+            }}
+          />
+          {/* 選択日の日報リスト */}
+          {selectedDate && (
+            <ReportListForDate date={selectedDate} reports={reports} />
+          )}
+        </View>
+      )}
+
+      {/* リストビュー */}
+      {viewMode === 'list' && (
+        <FlatList
+          data={reports}
+          renderItem={({ item }) => (
+            <ReportCard report={item} onPress={() => router.push(`/report/${item.id}`)} />
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      )}
+    </View>
+  );
+}
+
+// 日報カードコンポーネント
+function ReportCard({ report, onPress }: { report: DailyReport; onPress: () => void }) {
+  const statusColors = {
+    draft: 'bg-warning',
+    finalized: 'bg-success',
+    sent: 'bg-primary',
+  };
+  const statusLabels = {
+    draft: '下書き',
+    finalized: '確定',
+    sent: '送信済',
+  };
+
+  return (
+    <TouchableOpacity onPress={onPress} className="bg-white p-4 mx-4 my-2 rounded-lg border border-gray-300">
+      <View className="flex-row justify-between items-center">
+        <Text className="text-lg font-semibold">{report.content.siteName}</Text>
+        <View className={`px-2 py-1 rounded ${statusColors[report.status]}`}>
+          <Text className="text-white text-xs">{statusLabels[report.status]}</Text>
+        </View>
+      </View>
+      <Text className="text-gray-600 mt-1">{report.reportDate}</Text>
+      <Text className="text-gray-500 text-sm mt-1">
+        {report.content.weather} / {report.content.temperature}℃
+      </Text>
+    </TouchableOpacity>
+  );
+}
 ```
+
+**日報一覧画面仕様**:
+- パス: `/(tabs)/reports`
+- ビュー切替:
+  - カレンダービュー: 月別カレンダー、日報がある日にドット表示
+  - リストビュー: 日付降順のカード一覧
+- ステータスフィルター: すべて / 下書き / 確定 / 送信済
+- ドットカラー:
+  - 下書き: `--genba-warning`（オレンジ）
+  - 確定: `--genba-success`（緑）
+  - 送信済: `--genba-teal-700`（ティール）
+- 遷移先: 日報タップ → `/report/[id]`
 
 ### 5. 日報詳細・編集画面
 
@@ -246,7 +378,10 @@ genba-app-architectureスキルを参照して、
 - [ ] 天気情報が日報に含まれる
 - [ ] タイムスタンプ署名が生成される
 - [ ] PDFが正しく生成される
-- [ ] 日報一覧が表示される
+- [ ] 日報一覧がカレンダービューで表示される
+- [ ] 日報一覧がリストビューで表示される
+- [ ] カレンダー/リストビューの切り替えができる
+- [ ] ステータスでフィルタリングできる
 - [ ] 日報を編集できる
 - [ ] PDFを共有できる（LINE、メール等）
 - [ ] 下書き→確定のステータス管理ができる

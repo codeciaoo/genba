@@ -1,0 +1,82 @@
+# GENBA GEAR - vibe-kanban 設定
+# タスク管理とプロジェクト進捗トラッキング
+
+project:
+  name: "GENBA GEAR"
+  description: "建設現場職人のためのAIポケット事務員アプリ"
+
+# タスクのステータス定義
+statuses:
+  - id: backlog
+    name: "バックログ"
+    emoji: "📋"
+  - id: todo
+    name: "TODO"
+    emoji: "📝"
+  - id: in_progress
+    name: "進行中"
+    emoji: "🔨"
+  - id: review
+    name: "レビュー"
+    emoji: "👀"
+  - id: done
+    name: "完了"
+    emoji: "✅"
+
+# タスクのラベル/カテゴリ
+labels:
+  - id: mvp
+    name: "MVP"
+    color: "#10B981"
+    description: "MVP必須機能"
+  - id: v1.1
+    name: "v1.1"
+    color: "#3B82F6"
+    description: "v1.1リリース機能"
+  - id: v2
+    name: "v2+"
+    color: "#8B5CF6"
+    description: "将来バージョン"
+  - id: bug
+    name: "バグ"
+    color: "#EF4444"
+    description: "バグ修正"
+  - id: ui
+    name: "UI/UX"
+    color: "#F59E0B"
+    description: "UIデザイン関連"
+  - id: backend
+    name: "バックエンド"
+    color: "#06B6D4"
+    description: "サーバー/DB関連"
+  - id: voice
+    name: "音声"
+    color: "#EC4899"
+    description: "音声入力/AI関連"
+  - id: offline
+    name: "オフライン"
+    color: "#6366F1"
+    description: "オフライン機能"
+
+# 優先度
+priorities:
+  - id: critical
+    name: "最優先"
+    emoji: "🔴"
+  - id: high
+    name: "高"
+    emoji: "🟠"
+  - id: medium
+    name: "中"
+    emoji: "🟡"
+  - id: low
+    name: "低"
+    emoji: "🟢"
+
+# タスクファイルの場所
+tasks_dir: "tasks"
+
+# デフォルト設定
+defaults:
+  status: "backlog"
+  priority: "medium"

@@ -1,0 +1,96 @@
+# Dependabot configuration
+# 依存関係の自動アップデートとセキュリティアラート
+
+version: 2
+
+updates:
+  # LP (Landing Page) - pnpm
+  - package-ecosystem: "npm"
+    directory: "/lp"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "lp"
+    commit-message:
+      prefix: "chore(lp):"
+    groups:
+      astro:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+      tailwind:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+      dev-tools:
+        patterns:
+          - "@biomejs/*"
+          - "typescript"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # Mobile App - pnpm
+  - package-ecosystem: "npm"
+    directory: "/mobile"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "mobile"
+    commit-message:
+      prefix: "chore(mobile):"
+    groups:
+      expo:
+        patterns:
+          - "expo"
+          - "expo-*"
+          - "@expo/*"
+      react-native:
+        patterns:
+          - "react-native"
+          - "react-native-*"
+          - "@react-native/*"
+      testing:
+        patterns:
+          - "jest"
+          - "@testing-library/*"
+          - "msw"
+        update-types:
+          - "minor"
+          - "patch"
+      dev-tools:
+        patterns:
+          - "@biomejs/*"
+          - "typescript"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore(ci):"
+    groups:
+      github-actions:
+        patterns:
+          - "*"

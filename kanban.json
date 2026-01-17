@@ -1,0 +1,165 @@
+{
+  "todo": [
+    {
+      "id": "000",
+      "task": "#000 LP制作（ダウンロード誘導）",
+      "priority": "critical",
+      "labels": [
+        "astro",
+        "tailwind"
+      ],
+      "dependencies": [],
+      "description": "「GENBA GEAR」のLP（ランディングページ）を作成する。\nApp Store / Google Playダウンロードへの誘導を目的とする。",
+      "status": "todo"
+    },
+    {
+      "id": "001",
+      "task": "#001 プロジェクト初期化・基盤構築",
+      "priority": "critical",
+      "labels": [
+        "react-native",
+        "expo",
+        "typescript",
+        "tailwind"
+      ],
+      "dependencies": [],
+      "description": "React Native (Expo) プロジェクトの初期化と基盤構築を行う。",
+      "status": "todo"
+    },
+    {
+      "id": "002",
+      "task": "#002 データ層（WatermelonDB + Supabase）",
+      "priority": "critical",
+      "labels": [],
+      "dependencies": [
+        "001"
+      ],
+      "description": "オフラインファーストのデータ層を構築する。WatermelonDBをローカルDBとして使用し、Supabaseとの同期機能を実装する。",
+      "status": "todo"
+    },
+    {
+      "id": "003",
+      "task": "#003 認証・ユーザー設定",
+      "priority": "critical",
+      "labels": [],
+      "dependencies": [
+        "002"
+      ],
+      "description": "Supabase Authを使用したシンプルなメール/パスワード認証機能と、ユーザープロファイル・事業者情報の設定画面を実装する。",
+      "status": "todo"
+    },
+    {
+      "id": "004",
+      "task": "#004 騒音耐性AIボイス入力",
+      "priority": "critical",
+      "labels": [],
+      "dependencies": [
+        "003"
+      ],
+      "description": "建設現場の騒音環境下でも正確に音声入力できる、騒音耐性AIボイス入力機能を実装する。",
+      "status": "todo"
+    },
+    {
+      "id": "005",
+      "task": "#005 簡易日報生成（GPS+天気）",
+      "priority": "critical",
+      "labels": [],
+      "dependencies": [
+        "004"
+      ],
+      "description": "ボイス入力データからGPS/天気情報を統合し、法規準拠のPDF日報を1タップで生成する機能を実装する。",
+      "status": "todo"
+    },
+    {
+      "id": "006",
+      "task": "#006 請求書自動生成（インボイス対応）",
+      "priority": "critical",
+      "labels": [],
+      "dependencies": [
+        "005"
+      ],
+      "description": "日報・作業記録から請求書を自動生成する機能を実装する。インボイス制度（適格請求書等保存方式）に完全対応。",
+      "status": "todo"
+    },
+    {
+      "id": "007",
+      "task": "#007 仕上げ・テスト（MVP）",
+      "priority": "critical",
+      "labels": [],
+      "dependencies": [
+        "006"
+      ],
+      "description": "MVP機能の仕上げとテストを行い、App Store / Google Playへのリリース準備を完了する。",
+      "status": "todo"
+    },
+    {
+      "id": "008",
+      "task": "#008 GPS自動通知",
+      "priority": "high",
+      "labels": [],
+      "dependencies": [
+        "007"
+      ],
+      "description": "現場半径500m以内に接近した際に、施主やチームメンバーへ自動でSMS通知を送信する機能を実装する。",
+      "status": "todo"
+    },
+    {
+      "id": "009",
+      "task": "#009 軽量顧客カルテ",
+      "priority": "high",
+      "labels": [],
+      "dependencies": [
+        "007"
+      ],
+      "description": "顧客ごとの過去データを声検索で即確認できる軽量顧客カルテ機能を実装する。AI要約で重要情報を素早く把握。",
+      "status": "todo"
+    },
+    {
+      "id": "010",
+      "task": "#010 熱中症/安全アラート",
+      "priority": "high",
+      "labels": [],
+      "dependencies": [
+        "007"
+      ],
+      "description": "天気+GPS情報を活用して高温警報を通知し、熱中症や安全事故を予防する機能を実装する。",
+      "status": "todo"
+    },
+    {
+      "id": "011",
+      "task": "#011 チームプラン機能",
+      "priority": "medium",
+      "labels": [],
+      "dependencies": [
+        "010"
+      ],
+      "description": "中規模チーム（5-50人）向けのチーム管理機能を実装する。メンバー管理、データ共有、集約レポートなど。",
+      "status": "todo"
+    },
+    {
+      "id": "012",
+      "task": "#012 即時スマホ決済",
+      "priority": "medium",
+      "labels": [],
+      "dependencies": [
+        "011"
+      ],
+      "description": "Stripe連携によるQR決済機能を実装し、現場での即時決済を可能にする。",
+      "status": "todo"
+    },
+    {
+      "id": "013",
+      "task": "#013 チーム管理画面（Web）",
+      "priority": "medium",
+      "labels": [],
+      "dependencies": [
+        "011",
+        "002"
+      ],
+      "description": "チームプラン向けのWeb管理ダッシュボード。工務店の親方・事務員がPCから全メンバーの日報・請求書を一元管理できる。",
+      "status": "todo"
+    }
+  ],
+  "in_progress": [],
+  "done": []
+}

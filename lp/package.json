@@ -2,16 +2,30 @@
   "name": "genba-lp",
   "type": "module",
   "version": "0.0.1",
+  "description": "GENBA GEAR Landing Page - AIポケット事務員",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "typecheck": "astro check"
   },
   "dependencies": {
     "astro": "^4.0.0",
     "@astrojs/tailwind": "^5.0.0",
     "tailwindcss": "^3.4.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.0",
+    "@biomejs/biome": "^1.9.0",
+    "typescript": "^5.6.0"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
