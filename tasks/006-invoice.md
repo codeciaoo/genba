@@ -257,12 +257,342 @@ function buildInvoiceHTML(
 ### 6. 請求書作成・編集画面
 
 ```typescript
-// app/invoices/[id].tsx
-// 明細の追加・編集・削除
-// 顧客選択
-// 金額自動計算
-// PDF生成・プレビュー
+// app/invoice/edit/[id].tsx
+import { useState, useEffect } from 'react';
+
+export default function InvoiceEditScreen() {
+  const { id } = useLocalSearchParams();
+  const { data: invoice } = useInvoice(id);
+  const { data: customers } = useCustomers();
+
+  const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>(null);
+  const [items, setItems] = useState<InvoiceItem[]>([]);
+  const [issueDate, setIssueDate] = useState(formatDate(new Date()));
+  const [dueDate, setDueDate] = useState('');
+  const [notes, setNotes] = useState('');
+
+  // 顧客選択モーダル
+  const [showCustomerPicker, setShowCustomerPicker] = useState(false);
+
+  const selectedCustomer = customers?.find(c => c.id === selectedCustomerId);
+
+  // 金額計算
+  const subtotal = items.reduce((sum, item) => sum + item.amount, 0);
+  const taxAmount = calculateTax(items);
+  const totalAmount = subtotal + taxAmount;
+
+  const handleSave = async () => {
+    await saveInvoice({
+      ...invoice,
+      customerId: selectedCustomerId,
+      items,
+      issueDate,
+      dueDate,
+      notes,
+      subtotal,
+      taxAmount,
+      totalAmount,
+      status: 'draft',
+    });
+    router.push(`/invoice/preview/${id}`);
+  };
+
+  return (
+    <ScrollView className="flex-1 bg-background">
+      {/* 請求先選択 */}
+      <View className="p-4 bg-white border-b border-gray-200">
+        <Text className="font-semibold mb-2">請求先</Text>
+        <TouchableOpacity
+          onPress={() => setShowCustomerPicker(true)}
+          className="border border-gray-300 rounded-lg p-4 flex-row justify-between items-center"
+        >
+          {selectedCustomer ? (
+            <View>
+              <Text className="font-semibold">{selectedCustomer.name} 様</Text>
+              {selectedCustomer.address && (
+                <Text className="text-gray-500 text-sm">{selectedCustomer.address}</Text>
+              )}
+            </View>
+          ) : (
+            <Text className="text-gray-400">請求先を選択してください</Text>
+          )}
+          <Text className="text-primary">選択</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* 日付設定 */}
+      <View className="p-4 bg-white border-b border-gray-200">
+        <View className="flex-row mb-4">
+          <View className="flex-1 mr-2">
+            <Text className="font-semibold mb-2">発行日</Text>
+            <DatePicker value={issueDate} onChange={setIssueDate} />
+          </View>
+          <View className="flex-1 ml-2">
+            <Text className="font-semibold mb-2">支払期限（任意）</Text>
+            <DatePicker value={dueDate} onChange={setDueDate} placeholder="未設定" />
+          </View>
+        </View>
+      </View>
+
+      {/* 明細 */}
+      <View className="p-4 bg-white border-b border-gray-200">
+        <Text className="font-semibold mb-4">明細</Text>
+        {items.map((item, index) => (
+          <InvoiceItemRow
+            key={index}
+            item={item}
+            onUpdate={(updated) => updateItem(index, updated)}
+            onDelete={() => deleteItem(index)}
+          />
+        ))}
+        <TouchableOpacity
+          onPress={addItem}
+          className="border border-dashed border-primary rounded-lg p-4 items-center mt-2"
+        >
+          <Text className="text-primary">＋ 明細を追加</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* 金額サマリー */}
+      <View className="p-4 bg-white border-b border-gray-200">
+        <View className="flex-row justify-between mb-2">
+          <Text className="text-gray-600">小計（税抜）</Text>
+          <Text>¥{subtotal.toLocaleString()}</Text>
+        </View>
+        <View className="flex-row justify-between mb-2">
+          <Text className="text-gray-600">消費税</Text>
+          <Text>¥{taxAmount.toLocaleString()}</Text>
+        </View>
+        <View className="flex-row justify-between pt-2 border-t border-gray-200">
+          <Text className="font-bold text-lg">合計（税込）</Text>
+          <Text className="font-bold text-lg text-primary">¥{totalAmount.toLocaleString()}</Text>
+        </View>
+      </View>
+
+      {/* 備考 */}
+      <View className="p-4 bg-white border-b border-gray-200">
+        <Text className="font-semibold mb-2">備考（任意）</Text>
+        <TextInput
+          value={notes}
+          onChangeText={setNotes}
+          placeholder="備考があれば入力"
+          multiline
+          numberOfLines={3}
+          className="border border-gray-300 rounded-lg p-3"
+        />
+      </View>
+
+      {/* ボタン */}
+      <View className="p-4 flex-row">
+        <TouchableOpacity
+          onPress={() => router.back()}
+          className="flex-1 py-4 border border-gray-300 rounded-lg mr-2"
+        >
+          <Text className="text-center">キャンセル</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleSave}
+          className="flex-1 py-4 bg-primary rounded-lg ml-2"
+        >
+          <Text className="text-white text-center font-semibold">プレビュー</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* 顧客選択モーダル */}
+      <CustomerPickerModal
+        visible={showCustomerPicker}
+        customers={customers || []}
+        selectedId={selectedCustomerId}
+        onSelect={(id) => {
+          setSelectedCustomerId(id);
+          setShowCustomerPicker(false);
+        }}
+        onClose={() => setShowCustomerPicker(false)}
+        onAddNew={() => {
+          setShowCustomerPicker(false);
+          router.push('/site/edit/new');
+        }}
+      />
+    </ScrollView>
+  );
+}
+
+// 顧客選択モーダル
+function CustomerPickerModal({
+  visible,
+  customers,
+  selectedId,
+  onSelect,
+  onClose,
+  onAddNew,
+}: {
+  visible: boolean;
+  customers: Customer[];
+  selectedId: string | null;
+  onSelect: (id: string) => void;
+  onClose: () => void;
+  onAddNew: () => void;
+}) {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredCustomers = customers.filter(c =>
+    c.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <Modal visible={visible} animationType="slide" presentationStyle="pageSheet">
+      <View className="flex-1 bg-background">
+        <View className="p-4 border-b border-gray-200 flex-row justify-between items-center">
+          <Text className="text-lg font-bold">請求先を選択</Text>
+          <TouchableOpacity onPress={onClose}>
+            <Text className="text-primary">閉じる</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* 検索 */}
+        <View className="p-4">
+          <TextInput
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            placeholder="顧客名で検索"
+            className="border border-gray-300 rounded-lg p-3"
+          />
+        </View>
+
+        {/* 顧客リスト */}
+        <FlatList
+          data={filteredCustomers}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => onSelect(item.id)}
+              className={`p-4 border-b border-gray-200 flex-row justify-between items-center ${
+                selectedId === item.id ? 'bg-primary/10' : 'bg-white'
+              }`}
+            >
+              <View>
+                <Text className="font-semibold">{item.name}</Text>
+                {item.address && (
+                  <Text className="text-gray-500 text-sm">{item.address}</Text>
+                )}
+              </View>
+              {selectedId === item.id && (
+                <Text className="text-primary">✓</Text>
+              )}
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id}
+          ListEmptyComponent={
+            <View className="p-8 items-center">
+              <Text className="text-gray-500">顧客が見つかりません</Text>
+            </View>
+          }
+        />
+
+        {/* 新規追加 */}
+        <TouchableOpacity
+          onPress={onAddNew}
+          className="p-4 border-t border-gray-200 bg-white"
+        >
+          <Text className="text-primary text-center">＋ 新しい顧客を登録</Text>
+        </TouchableOpacity>
+      </View>
+    </Modal>
+  );
+}
+
+// 明細行コンポーネント
+function InvoiceItemRow({
+  item,
+  onUpdate,
+  onDelete,
+}: {
+  item: InvoiceItem;
+  onUpdate: (item: InvoiceItem) => void;
+  onDelete: () => void;
+}) {
+  return (
+    <View className="border border-gray-200 rounded-lg p-3 mb-2">
+      <View className="flex-row justify-between items-start">
+        <View className="flex-1">
+          <TextInput
+            value={item.description}
+            onChangeText={(text) => onUpdate({ ...item, description: text })}
+            placeholder="品目"
+            className="font-semibold mb-2"
+          />
+          <View className="flex-row">
+            <TextInput
+              value={item.quantity.toString()}
+              onChangeText={(text) => {
+                const qty = Number(text) || 0;
+                onUpdate({ ...item, quantity: qty, amount: qty * item.unitPrice });
+              }}
+              keyboardType="numeric"
+              className="w-16 border border-gray-300 rounded p-1 mr-2 text-center"
+            />
+            <TextInput
+              value={item.unit}
+              onChangeText={(text) => onUpdate({ ...item, unit: text })}
+              placeholder="単位"
+              className="w-16 border border-gray-300 rounded p-1 mr-2 text-center"
+            />
+            <Text className="self-center mr-2">×</Text>
+            <TextInput
+              value={item.unitPrice.toString()}
+              onChangeText={(text) => {
+                const price = Number(text) || 0;
+                onUpdate({ ...item, unitPrice: price, amount: item.quantity * price });
+              }}
+              keyboardType="numeric"
+              placeholder="単価"
+              className="flex-1 border border-gray-300 rounded p-1"
+            />
+          </View>
+        </View>
+        <TouchableOpacity onPress={onDelete} className="ml-2 p-2">
+          <Text className="text-error">✕</Text>
+        </TouchableOpacity>
+      </View>
+      <View className="flex-row justify-between mt-2 pt-2 border-t border-gray-100">
+        <View className="flex-row items-center">
+          <Text className="text-gray-500 mr-2">税率:</Text>
+          <TouchableOpacity
+            onPress={() => onUpdate({ ...item, taxRate: item.taxRate === 10 ? 8 : 10 })}
+            className={`px-2 py-1 rounded ${item.taxRate === 10 ? 'bg-primary' : 'bg-gray-200'}`}
+          >
+            <Text className={item.taxRate === 10 ? 'text-white' : ''}>10%</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => onUpdate({ ...item, taxRate: item.taxRate === 8 ? 10 : 8 })}
+            className={`px-2 py-1 rounded ml-1 ${item.taxRate === 8 ? 'bg-primary' : 'bg-gray-200'}`}
+          >
+            <Text className={item.taxRate === 8 ? 'text-white' : ''}>8%</Text>
+          </TouchableOpacity>
+        </View>
+        <Text className="font-semibold">¥{item.amount.toLocaleString()}</Text>
+      </View>
+    </View>
+  );
+}
 ```
+
+**請求書編集画面仕様**:
+- パス: `/invoice/edit/[id]`
+- 請求先選択:
+  - モーダルで顧客一覧から選択
+  - 検索機能付き
+  - 新規顧客登録へのリンク
+- 明細編集:
+  - 品目、数量、単位、単価の編集
+  - 税率切り替え（10%/8%）
+  - 金額自動計算
+  - 追加・削除
+- 日付:
+  - 発行日（必須）
+  - 支払期限（任意）
+- 金額サマリー:
+  - 小計、消費税、合計を自動計算・表示
+- 遷移先: プレビュー → `/invoice/preview/[id]`
 
 ## インボイス制度対応チェックリスト
 
@@ -295,7 +625,11 @@ invoice-generatorスキルを参照して、
 
 - [ ] 作業記録から請求書が自動生成される
 - [ ] 請求書番号が自動採番される
+- [ ] 請求先（顧客）を選択できる
+- [ ] 顧客選択モーダルで検索できる
+- [ ] 顧客選択から新規顧客登録へ遷移できる
 - [ ] 明細を追加・編集・削除できる
+- [ ] 税率（10%/8%）を切り替えできる
 - [ ] 税額が正しく計算される
 - [ ] インボイス制度に準拠したPDFが生成される
 - [ ] 登録番号が表示される

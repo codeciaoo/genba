@@ -17,7 +17,6 @@
 | Secret名 | 説明 | 取得方法 |
 |---------|------|---------|
 | `EXPO_TOKEN` | Expo APIトークン | [Expo Dashboard](https://expo.dev/accounts/[account]/settings/access-tokens) → Create Token |
-| `CODECOV_TOKEN` | Codecovトークン | [Codecov](https://codecov.io/) → Settings → Repository → Upload Token |
 
 ### App Store / Google Play（本番リリース時）
 
@@ -104,7 +103,3 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=xxx
 - `eas.json` のプロファイル設定を確認
 - `app.json` または `app.config.js` の設定を確認
 
-### Codecovにカバレッジがアップロードされない
-
-- `CODECOV_TOKEN` が設定されているか確認
-- カバレッジファイルのパスが正しいか確認
