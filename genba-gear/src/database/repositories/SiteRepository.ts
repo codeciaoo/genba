@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { BaseRepository } from './BaseRepository';
 import Site, { ClientType } from '../models/Site';
 import { TableNames } from '../schema';
+import { setCreatedTimestamps } from '../helpers/rawHelpers';
 
 export interface CreateSiteParams {
   name: string;
@@ -64,10 +65,7 @@ export class SiteRepository extends BaseRepository<Site> {
         site.notes = params.notes || null;
         site.isActive = true;
         site.isSynced = false;
-        // @ts-ignore - WatermelonDBの内部プロパティ
-        site._raw.created_at = Date.now();
-        // @ts-ignore
-        site._raw.updated_at = Date.now();
+        setCreatedTimestamps(site);
       });
     });
   }

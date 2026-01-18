@@ -8,6 +8,13 @@ import { Observable } from 'rxjs';
 import { BaseRepository } from './BaseRepository';
 import Invoice, { InvoiceItem, TaxBreakdown, InvoiceStatus } from '../models/Invoice';
 import { TableNames } from '../schema';
+import {
+  setRawTimestamp,
+  setRawJson,
+  setCreatedTimestamps,
+  setUpdatedTimestamp,
+  getRaw,
+} from '../helpers/rawHelpers';
 
 export interface CreateInvoiceParams {
   siteId?: string;
@@ -52,29 +59,20 @@ export class InvoiceRepository extends BaseRepository<Invoice> {
         invoice.siteId = params.siteId || null;
         invoice.workRecordId = params.workRecordId || null;
         invoice.invoiceNumber = params.invoiceNumber;
-        // @ts-ignore
-        invoice._raw.issue_date = params.issueDate.getTime();
-        // @ts-ignore
-        invoice._raw.due_date = params.dueDate ? params.dueDate.getTime() : null;
-        // @ts-ignore
-        invoice._raw.items = JSON.stringify(params.items);
+        setRawTimestamp(invoice, 'issue_date', params.issueDate);
+        setRawTimestamp(invoice, 'due_date', params.dueDate || null);
+        setRawJson(invoice, 'items', params.items);
         invoice.subtotal = params.subtotal;
         invoice.taxAmount = params.taxAmount;
         invoice.totalAmount = params.totalAmount;
-        // @ts-ignore
-        invoice._raw.tax_breakdown = JSON.stringify(params.taxBreakdown || {});
+        setRawJson(invoice, 'tax_breakdown', params.taxBreakdown || {});
         invoice.status = 'draft';
-        // @ts-ignore
-        invoice._raw.sent_at = null;
-        // @ts-ignore
-        invoice._raw.paid_at = null;
+        setRawTimestamp(invoice, 'sent_at', null);
+        setRawTimestamp(invoice, 'paid_at', null);
         invoice.pdfUrl = null;
         invoice.notes = params.notes || null;
         invoice.isSynced = false;
-        // @ts-ignore
-        invoice._raw.created_at = Date.now();
-        // @ts-ignore
-        invoice._raw.updated_at = Date.now();
+        setCreatedTimestamps(invoice);
       });
     });
   }
@@ -186,11 +184,9 @@ export class InvoiceRepository extends BaseRepository<Invoice> {
     await this.database.write(async () => {
       await invoice.update((inv) => {
         inv.status = 'sent';
-        // @ts-ignore
-        inv._raw.sent_at = Date.now();
+        setRawTimestamp(inv, 'sent_at', Date.now());
         inv.isSynced = false;
-        // @ts-ignore
-        inv._raw.updated_at = Date.now();
+        setUpdatedTimestamp(inv);
       });
     });
 
@@ -207,11 +203,9 @@ export class InvoiceRepository extends BaseRepository<Invoice> {
     await this.database.write(async () => {
       await invoice.update((inv) => {
         inv.status = 'paid';
-        // @ts-ignore
-        inv._raw.paid_at = Date.now();
+        setRawTimestamp(inv, 'paid_at', Date.now());
         inv.isSynced = false;
-        // @ts-ignore
-        inv._raw.updated_at = Date.now();
+        setUpdatedTimestamp(inv);
       });
     });
 

@@ -6,7 +6,7 @@
  * - pushChanges: ローカルの変更をSupabaseにプッシュ
  */
 import { synchronize } from '@nozbe/watermelondb/sync';
-import { Database } from '@nozbe/watermelondb';
+import { Database, Q } from '@nozbe/watermelondb';
 import { supabase } from '../../services/supabase/client';
 import { TableNames } from './schema';
 
@@ -500,11 +500,7 @@ export async function hasPendingChanges(database: Database): Promise<boolean> {
   for (const tableName of SYNC_TABLES) {
     const count = await database
       .get(tableName)
-      .query()
-      .extend(
-        // @ts-ignore - WatermelonDBのwhere句
-        (q) => q.where('is_synced', false)
-      )
+      .query(Q.where('is_synced', false))
       .fetchCount();
 
     if (count > 0) {

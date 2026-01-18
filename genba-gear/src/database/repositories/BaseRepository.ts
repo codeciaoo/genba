@@ -6,6 +6,7 @@
  */
 import { Database, Model, Q, Query } from '@nozbe/watermelondb';
 import { Observable } from 'rxjs';
+import { setUpdatedTimestamp, setSyncFlags, getRaw } from '../helpers/rawHelpers';
 
 export interface CreateParams<T> {
   [key: string]: unknown;
@@ -77,14 +78,10 @@ export abstract class BaseRepository<T extends Model> {
     await this.database.write(async () => {
       await record.update((r) => {
         Object.entries(params).forEach(([key, value]) => {
-          // @ts-ignore - 動的にプロパティをセット
-          r[key] = value;
+          (r as Record<string, unknown>)[key] = value;
         });
-        // 更新フラグを立てる
-        // @ts-ignore
-        r.isSynced = false;
-        // @ts-ignore
-        r.updatedAt = new Date();
+        setSyncFlags(r, { isSynced: false });
+        setUpdatedTimestamp(r);
       });
     });
 
@@ -114,12 +111,9 @@ export abstract class BaseRepository<T extends Model> {
 
     await this.database.write(async () => {
       await record.update((r) => {
-        // @ts-ignore
-        r.isActive = false;
-        // @ts-ignore
-        r.isSynced = false;
-        // @ts-ignore
-        r.updatedAt = new Date();
+        getRaw(r).is_active = false;
+        setSyncFlags(r, { isSynced: false });
+        setUpdatedTimestamp(r);
       });
     });
 
@@ -151,10 +145,7 @@ export abstract class BaseRepository<T extends Model> {
 
     await this.database.write(async () => {
       await record.update((r) => {
-        // @ts-ignore
-        r.serverId = serverId;
-        // @ts-ignore
-        r.isSynced = true;
+        setSyncFlags(r, { serverId, isSynced: true });
       });
     });
   }

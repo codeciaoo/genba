@@ -9,6 +9,11 @@ import { BaseRepository } from './BaseRepository';
 import DailyReport from '../models/DailyReport';
 import { WorkItem, Material } from '../models/WorkRecord';
 import { TableNames } from '../schema';
+import {
+  setRawTimestamp,
+  setRawJson,
+  setCreatedTimestamps,
+} from '../helpers/rawHelpers';
 
 export interface CreateDailyReportParams {
   siteId?: string;
@@ -52,14 +57,10 @@ export class DailyReportRepository extends BaseRepository<DailyReport> {
       return this.collection.create((report) => {
         report.siteId = params.siteId || null;
         report.workRecordId = params.workRecordId || null;
-        // @ts-ignore
-        report._raw.report_date = params.reportDate.getTime();
-        // @ts-ignore
-        report._raw.work_items = JSON.stringify(params.workItems);
-        // @ts-ignore
-        report._raw.materials = JSON.stringify(params.materials || []);
-        // @ts-ignore
-        report._raw.additional_work = JSON.stringify(params.additionalWork || []);
+        setRawTimestamp(report, 'report_date', params.reportDate);
+        setRawJson(report, 'work_items', params.workItems);
+        setRawJson(report, 'materials', params.materials || []);
+        setRawJson(report, 'additional_work', params.additionalWork || []);
         report.workerName = params.workerName || null;
         report.workHours = params.workHours || null;
         report.weather = params.weather || null;
@@ -67,10 +68,7 @@ export class DailyReportRepository extends BaseRepository<DailyReport> {
         report.notes = params.notes || null;
         report.pdfUrl = null;
         report.isSynced = false;
-        // @ts-ignore
-        report._raw.created_at = Date.now();
-        // @ts-ignore
-        report._raw.updated_at = Date.now();
+        setCreatedTimestamps(report);
       });
     });
   }

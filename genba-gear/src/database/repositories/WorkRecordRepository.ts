@@ -13,6 +13,13 @@ import WorkRecord, {
   WorkRecordStatus,
 } from '../models/WorkRecord';
 import { TableNames } from '../schema';
+import {
+  setRawTimestamp,
+  setRawJson,
+  setCreatedTimestamps,
+  setUpdatedTimestamp,
+  getRaw,
+} from '../helpers/rawHelpers';
 
 export interface CreateWorkRecordParams {
   siteId?: string;
@@ -56,29 +63,19 @@ export class WorkRecordRepository extends BaseRepository<WorkRecord> {
     return this.database.write(async () => {
       return this.collection.create((record) => {
         record.siteId = params.siteId || null;
-        // @ts-ignore - WatermelonDBの日付型
-        record._raw.recorded_at = (params.recordedAt || new Date()).getTime();
+        setRawTimestamp(record, 'recorded_at', params.recordedAt || new Date());
         record.voiceFileUrl = params.voiceFileUrl || null;
         record.voiceTranscript = params.voiceTranscript || null;
-        // @ts-ignore - JSON型
-        record._raw.extracted_data = params.extractedData
-          ? JSON.stringify(params.extractedData)
-          : null;
-        // @ts-ignore
-        record._raw.work_items = JSON.stringify(params.workItems || []);
-        // @ts-ignore
-        record._raw.materials = JSON.stringify(params.materials || []);
-        // @ts-ignore
-        record._raw.additional_work = JSON.stringify(params.additionalWork || []);
+        setRawJson(record, 'extracted_data', params.extractedData);
+        setRawJson(record, 'work_items', params.workItems || []);
+        setRawJson(record, 'materials', params.materials || []);
+        setRawJson(record, 'additional_work', params.additionalWork || []);
         record.workStartTime = params.workStartTime || null;
         record.workEndTime = params.workEndTime || null;
         record.notes = params.notes || null;
         record.status = params.status || 'draft';
         record.isSynced = false;
-        // @ts-ignore
-        record._raw.created_at = Date.now();
-        // @ts-ignore
-        record._raw.updated_at = Date.now();
+        setCreatedTimestamps(record);
       });
     });
   }
@@ -170,11 +167,9 @@ export class WorkRecordRepository extends BaseRepository<WorkRecord> {
 
     await this.database.write(async () => {
       await record.update((r) => {
-        // @ts-ignore
-        r._raw.work_items = JSON.stringify(workItems);
+        setRawJson(r, 'work_items', workItems);
         r.isSynced = false;
-        // @ts-ignore
-        r._raw.updated_at = Date.now();
+        setUpdatedTimestamp(r);
       });
     });
 

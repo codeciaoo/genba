@@ -9,6 +9,7 @@ import 'react-native-reanimated';
 import '../global.css';
 
 import { AuthProvider, useAuthContext } from '@/features/auth/context/AuthContext';
+import { DatabaseProvider } from '@/database';
 
 export {
   ErrorBoundary,
@@ -41,9 +42,11 @@ export default function RootLayout() {
   }
 
   return (
-    <AuthProvider>
-      <RootLayoutNav />
-    </AuthProvider>
+    <DatabaseProvider>
+      <AuthProvider>
+        <RootLayoutNav />
+      </AuthProvider>
+    </DatabaseProvider>
   );
 }
 

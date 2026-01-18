@@ -6,6 +6,7 @@ import { Database, Q } from '@nozbe/watermelondb';
 import VoiceQueue, { VoiceQueueMetadata, VoiceQueueStatus } from '@/database/models/VoiceQueue';
 import { TableNames } from '@/database/schema';
 import { GPSLocation } from '../types';
+import { setRawJson, getRaw } from '@/database/helpers/rawHelpers';
 
 export class OfflineQueueService {
   private database: Database;
@@ -28,8 +29,7 @@ export class OfflineQueueService {
     return this.database.write(async () => {
       return this.collection.create((record) => {
         record.audioUri = audioUri;
-        // @ts-ignore - JSON型
-        record._raw.metadata = JSON.stringify({
+        setRawJson(record, 'metadata', {
           siteId: metadata.siteId,
           siteName: metadata.siteName,
           recordedAt: Date.now(),
@@ -38,8 +38,7 @@ export class OfflineQueueService {
         record.status = 'pending';
         record.errorMessage = null;
         record.retryCount = 0;
-        // @ts-ignore
-        record._raw.created_at = Date.now();
+        getRaw(record).created_at = Date.now();
       });
     });
   }
