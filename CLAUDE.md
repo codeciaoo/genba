@@ -168,6 +168,82 @@ Noto Sans JP。視認性最優先。
 
 ---
 
+## プロジェクト構造（genba-gear）
+
+```
+genba-gear/
+├── app/                    # Expo Router画面
+│   ├── (tabs)/            # タブナビゲーション
+│   ├── auth/              # 認証画面
+│   ├── voice/             # 音声入力画面
+│   ├── draft/             # 下書き画面
+│   ├── report/            # 日報画面
+│   └── settings/          # 設定画面
+├── src/                    # アプリケーションコード（※重要）
+│   ├── components/        # 共通UIコンポーネント
+│   │   └── ui/           # Button, Card, Input, Badge
+│   ├── features/          # 機能別モジュール
+│   │   ├── auth/         # 認証
+│   │   ├── voice/        # 音声入力
+│   │   └── settings/     # 設定
+│   ├── database/          # WatermelonDB関連
+│   │   ├── models/       # モデル定義
+│   │   └── repositories/ # リポジトリ
+│   ├── services/          # 外部サービス連携
+│   │   ├── openai/       # Whisper + GPT
+│   │   ├── supabase/     # 認証・同期
+│   │   ├── location/     # GPS
+│   │   └── weather/      # 天気API
+│   └── hooks/             # 共通フック
+└── tsconfig.json          # @/* -> ./src/* のエイリアス
+```
+
+### インポートルール
+
+```typescript
+// ✅ 正しい: @/ は src/ を指す
+import { Button } from '@/components/ui/Button';
+import { useDatabase } from '@/database';
+
+// ❌ 間違い: @/src/ は冗長（./src/src/ になる）
+import { Button } from '@/src/components/ui/Button';
+
+// ❌ 間違い: ルートからの相対パス
+import { Button } from '../../components/ui/Button';
+```
+
+### UIコンポーネント共通props
+
+```typescript
+// Button
+<Button
+  variant="primary" | "secondary" | "outline" | "ghost" | "warning"
+  size="sm" | "md" | "lg"
+  fullWidth={boolean}
+  loading={boolean}
+  leftIcon={ReactNode}
+  rightIcon={ReactNode}
+  className={string}
+/>
+
+// Card
+<Card
+  variant="default" | "elevated" | "outlined"
+  padding="none" | "sm" | "md" | "lg"
+  onPress={() => {}}  // タップ可能にする場合
+  className={string}
+/>
+
+// Badge
+<Badge
+  variant="default" | "primary" | "success" | "warning" | "error" | "info"
+  size="sm" | "md" | "lg"
+  className={string}
+/>
+```
+
+---
+
 ## 開発時の心得
 
 ### コードを書く前に
