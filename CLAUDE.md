@@ -56,6 +56,22 @@
 
 ---
 
+## 外部サービス
+
+### Supabase
+
+- **プロジェクト**: genba-gear
+- **リージョン**: Northeast Asia (Tokyo)
+- **ダッシュボード**: https://supabase.com/dashboard/project/kluyqanzzyroiilqxgcr
+- **テーブル**: `business_profiles`, `bank_accounts`, `item_templates`, `work_records`
+
+### OpenAI
+
+- **用途**: Whisper（音声認識）+ GPT-4o-mini（構造化抽出）
+- **設定**: `.env` の `EXPO_PUBLIC_OPENAI_API_KEY`
+
+---
+
 ## ドキュメント参照
 
 | 目的 | 参照先 |
@@ -63,7 +79,8 @@
 | アーキテクチャ設計 | `/docs/architecture/` |
 | 画面設計・UI仕様 | `/docs/design/` |
 | 機能要件 | `/docs/requirements/` |
-| 開発タスク | `/issues/` |
+| 開発タスク | `/tasks/` |
+| DBマイグレーション | `/genba-gear/supabase/migrations/` |
 
 ---
 
