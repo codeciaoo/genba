@@ -247,6 +247,28 @@ LP・アプリ共に、画面下部に常時表示のCTAを配置:
 6. **長文の説明** - 職人は読まない
 7. **複雑な設定画面** - シンプルに事務ゼロを実現
 
+## React Native コンポーネント
+
+詳細は [references/react-native-components.md](references/react-native-components.md) を参照。
+
+### クイックリファレンス
+
+```tsx
+// Button
+<Button variant="primary" size="lg">保存</Button>
+
+// Card
+<Card variant="elevated" padding="lg" onPress={handler}>...</Card>
+
+// Input
+<Input label="メール" value={v} onChangeText={setV} error={err} />
+
+// Badge
+<Badge variant="success">同期済み</Badge>
+```
+
+---
+
 ## 帳票（日報）デザイン
 
 ### 日報

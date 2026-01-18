@@ -7,6 +7,16 @@ module.exports = function (api) {
     ],
     plugins: [
       ['@babel/plugin-proposal-decorators', { legacy: true }],
+      ['@babel/plugin-transform-class-properties', { loose: true }],
+      [
+        'module-resolver',
+        {
+          root: ['./'],
+          alias: {
+            '@': './src',
+          },
+        },
+      ],
       'react-native-reanimated/plugin',
     ],
   };
